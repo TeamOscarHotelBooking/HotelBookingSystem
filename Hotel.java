@@ -16,6 +16,7 @@ public class Hotel {
     protected int floors;
     protected String HotelName;
     protected int NumberofRooms;
+    protected String location;
     
     /**
      * Hotel Constructor 
@@ -25,7 +26,7 @@ public class Hotel {
      * @param type
      * @param price 
      */
-    public Hotel(String HotelName, int NumberofRooms, int floors, RoomType type, double price){
+    public Hotel(String HotelName, int NumberofRooms, int floors, RoomType type, double price, String location){
         
         this.Rooms = new Room[NumberofRooms];
         for (int i = 0 ; i<NumberofRooms;i++){  // Temporary loop to intialze the rooms using the deault Room Constructor
@@ -34,6 +35,7 @@ public class Hotel {
         this.NumberofRooms = NumberofRooms;
         this.HotelName = HotelName;
         this.floors = floors;
+        this.location = location;
         
         
     }
@@ -43,6 +45,10 @@ public class Hotel {
      * @param RoomNumber
      * @param Dicount 
      */
+    
+    public String getLocation() {
+        return location;
+    }
     
     public void setRoomDicount(int RoomNumber,Double Dicount){
        this.Rooms[RoomNumber].DiscountPrice(Dicount);
