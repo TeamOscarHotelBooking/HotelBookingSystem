@@ -29,7 +29,14 @@ public class HBS {
        NU.setRoomDicount(13, 0.7);  // set a discout of 70% on room 13
        System.out.println(NU.Rooms[13].getPrice());     // check the price of room 13 to see the discount
        System.out.println(NU.Rooms[10].getPrice());     // check the price of a random room to compare
-        
+       GregorianCalendar g1=new GregorianCalendar();    // creat a new calendar
+       Date d2 = new Date(114,4,8);                     // creat the start booking date
+       g1.setTime(d2);
+       Room room1 = new Room();
+       int nights=5;                                // how many nights does the customer want to book.
+       room1.bookroom(g1, nights);                  // check bookroom method can change the state.
+       System.out.println(room1.isEmpty(g1, nights));   // check IsEmpty method can return false means is not availble
+       System.out.println(room1.getState()); 
         
     }
     
