@@ -19,7 +19,7 @@ public class Room {
     protected RoomType type ;
     protected double price;
     protected Calendar Date;
-    protected RoomState state;
+    protected RoomState[] state;
     
     /**
      * Default Constructor
@@ -30,8 +30,10 @@ public class Room {
     this.type = RoomType.SINGLE;
     this.price = 100;
     this.Date =  new GregorianCalendar();
-    this.state = RoomState.AVAILABLE;
-        
+    this.state = RoomState[60];
+    for (int i=0; i<60; i++){
+        this.state[i]=RoomState.AVAILABLE;
+    }       
     }
     
     public Room (int number,RoomType type,double price){
@@ -39,7 +41,10 @@ public class Room {
     this.type = type;
     this.price = price;
     this.Date =  new GregorianCalendar();
-    this.state = RoomState.AVAILABLE;
+    this.state = RoomState[60];
+    for (int i=0; i<60; i++){
+        this.state[i]=RoomState.AVAILABLE;
+    }
     }
     
     /**
@@ -62,10 +67,13 @@ public class Room {
      * Room State Transformer
      * @param state 
      */
-    public void setState(RoomState state){
-        this.state = state;
+    public String getState(){
+        String s="the state of this room:";
+        for (int i=0; i<60; i++){
+            s=s+" "+this.state[i];
+        }
+        return s;
     }
-    
     /**
      * Room Type observer
      * @return type
@@ -108,12 +116,39 @@ public class Room {
      * Function to check if the room is booked or not 
      * @return true if the room is available
      */
-    public boolean isEmpty(){
-        if (this.state == RoomState.BOOKED){
-            return false;
-        }
+    public boolean isEmpty(GregorianCalendar g1,int nights){
+        Date nowdate = new Date();
+        GregorianCalendar g2= new GregorianCalendar();
+        g2.setTime(nowdate);
+        date d=new date();
+        int interval=d.daysInterval(g1, g2);
+        if((interval+nights)<60){
+            for (int i=interval; i<=(interval+nights); i++){
+                if (this.state[i] == RoomState.BOOKED){
+                    return false;
+                }
+            }
+         }
+        else System.out.println("Error: overflow.");
         return true;
     }
+    
+    public void bookroom(GregorianCalendar g1,int nights)
+  {
+        Date nowdate = new Date();
+        GregorianCalendar g2= new GregorianCalendar();
+        g2.setTime(nowdate);
+        date d=new date();
+        int interval=d.daysInterval(g1, g2);
+        if((interval+nights)<60){
+            for (int i=interval; i<=(interval+nights); i++)
+            {
+                this.state[i]=RoomState.BOOKED;
+            }
+        }
+        else System.out.println("Error: overflow.");
+  }
+
     
     
     
