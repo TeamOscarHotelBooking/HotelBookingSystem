@@ -8,9 +8,8 @@ package hbs;
 
 /**
  *
- * @author Team Oscar
+ * @author zinbook
  */
-enum RoomType {
-    SINGLE, DOUBLE, JUNIORSUITE
-}
+public class HotelDataBase {
     
+}

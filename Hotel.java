@@ -5,20 +5,19 @@
  */
 
 package hbs;
-import java.util.Scanner;
 
 /**
  *
  * @author Team Oscar
  */
-public class Hotel 
-{
+public class Hotel {
+    
     
     protected Room[][] Rooms;
     protected int floors;
     protected String HotelName;
     protected int NumberofRooms;
-    protected String location;
+    protected int RoomsPerFloor;
     
     /**
      * Hotel Constructor 
@@ -28,102 +27,90 @@ public class Hotel
      * @param type
      * @param price 
      */
-    public Hotel(String HotelName, int NumberofRooms, int floors, RoomType type, double price, String location)
+    public Hotel(String HotelName, int NumberofRooms, int floors, RoomType type, double price)
     {
         
         this.HotelName = HotelName;
-        int roomsPerFloor = NumberofRooms / floors;
+        this.RoomsPerFloor = NumberofRooms / floors;
         this.NumberofRooms = NumberofRooms;
         this.floors = floors;
-        this.location = location;
         
-        this.Rooms = new Room[floors][roomsPerFloor];
+        this.Rooms = new Room[this.floors][this.RoomsPerFloor];
         
-        for (int i = 1; i <= floors; i++)
+        for (int i = 0; i < floors; i++)
         {
-            for (int j = 1; j <= roomsPerFloor; j++)
+            for (int j = 0; j < RoomsPerFloor; j++)
             {
-                Rooms[i-1][j-1] = new Room(j, type, price);
+                //Rooms[i][j] = new Room(j, type, price);
             }
         }
         
         
         
     }
-    
-    public Hotel(String HotelName, int NumberofRooms, int floors, String location)
-    {
-        System.out.println("Please input how many of the rooms you would like to be singles...");
-        Scanner single = new Scanner(System.in);
-        int numSingles = single.nextInt();
-        
-        System.out.println("Please input how many of the rooms you would like to be doubles...");
-        Scanner doubles = new Scanner(System.in);
-        int numDoubles = doubles.nextInt();
-        
-        int numJRSuites = NumberofRooms - numSingles - numDoubles;
-        
-        System.out.println("Please input the price of your singles...");
-        Scanner price1 = new Scanner(System.in);
-        int singlePrice = price1.nextInt();
-        
-        System.out.println("Please input the price of your doubles...");
-        Scanner price2 = new Scanner(System.in);
-        int doublePrice = price2.nextInt();
-        
-        System.out.println("Please input the price of your Junior Suites");
-        Scanner price3 = new Scanner(System.in);
-        int JRSuitePrice = price3.nextInt();
-        
-        this.HotelName = HotelName;
-        this.NumberofRooms = NumberofRooms;
-        this.floors = floors;
-        int RoomsperFloor = (int) NumberofRooms / floors;
-        this.location = location;
-        
-        this.Rooms = new Room[floors][RoomsperFloor];
-        
-        int roomCount = 0;
-        
-        for (int i = 1; i <= floors; i++)
-        {
-            for (int j = 1; j <= RoomsperFloor; j++)
-            {
-                if (roomCount < numSingles)
-                {
-                   Rooms[i-1][j-1] = new Room(j, RoomType.SINGLE, singlePrice);
-                }    
-                else if (roomCount >= numSingles && roomCount < (numSingles + numDoubles))
-                {
-                    Rooms[i-1][j-1] = new Room(j, RoomType.DOUBLE, doublePrice);
-                }
-                else
-                {
-                    Rooms[i-1][j-1] = new Room(j, RoomType.JUNIORSUITE, JRSuitePrice);
-                }
-                roomCount++;
-            }
-        }
-    
-    }
-    
-    public Room[][] getRooms()
-    {
-        return this.Rooms;
-    }
-    
-       
-        
-    
     
     /**
-     * A method to set a discount for a specific room in the hotel 
+     * Sets a discount for all the rooms in the hotels
+     * @param Discount 
+     */
+    public void setRoomDicount(Double Discount){
+       
+       for (int i = 0 ; i<this.floors;i++){
+           for (int j = 0; j < this.RoomsPerFloor; j++)
+            {
+                this.Rooms[i][j].DiscountPrice(Discount);
+            }
+          
+       }
+    }
+    
+    /**
+     * A method to set a discount for a specific room in the hotel using the room number 
      * @param RoomNumber
      * @param Dicount 
      */
     
-//    public void setRoomDicount(int RoomNumber,Double Dicount){
-//       this.Rooms[RoomNumber].DiscountPrice(Dicount);
-//    }
+    public void setRoomDicount(int FloorNumber, int RoomNumber,Double Discount){
+       this.Rooms[FloorNumber-1][RoomNumber-1].DiscountPrice(Discount);     // -1 because of zero indexing
+    }
+    
+    /**
+     * A method to set a discount for all rooms within a hotel of a specific type
+     * @param type
+     * @param Discount 
+     */
+    public void setRoomDicount( RoomType type, Double Discount){
+        for (int i = 0 ; i<this.floors;i++){
+            for (int j = 0 ; j<this.RoomsPerFloor; j++){
+                if (this.Rooms[i][j].type == type){
+                    this.Rooms[i][j].DiscountPrice(Discount);
+                }
+            }
+        }
+    }
+    
+    
+    /**
+     * A method to set a discount on a range of rooms within in specific floors
+     * where the user specify the type of rooms to set a discount on
+     * @param type
+     * @param SartingFloorRange
+     * @param EndingFloorRange
+     * @param StartingRoomRange
+     * @param EndingRoomRange
+     * @param Discount 
+     */
+    
+    public void setRoomDiscount(RoomType type, int SartingFloorRange, int EndingFloorRange, int StartingRoomRange,
+            int EndingRoomRange, double Discount){
+        
+        for (int i=SartingFloorRange ; i<=EndingFloorRange;i++){
+            for (int j=StartingRoomRange ; j<=EndingRoomRange;j++){
+                if (this.Rooms[i-1][j-1].type == type){
+                    this.Rooms[i-1][j-1].DiscountPrice(Discount);
+                }
+            }
+        }
+    }
     
 }
