@@ -11,5 +11,7 @@ package hbs;
  * @author Team Oscar
  */
 public enum  RoomState {
+//comm
+
     BOOKED, AVAILABLE
 }
