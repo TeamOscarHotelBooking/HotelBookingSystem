@@ -1,0 +1,49 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package HBS;
+
+
+import java.util.GregorianCalendar;
+import java.util.Calendar;
+import java.util.Date;
+
+/**
+ *
+ * @author zhangzy
+ */
+public class date {
+    private Date nowdate;
+    public date()
+    {
+        nowdate=new Date();
+    }
+   public int daysInterval(GregorianCalendar g1,GregorianCalendar g2)   
+   {  
+      int interval = 0;
+      GregorianCalendar gc1, gc2;
+      if (g2.after(g1)) {
+            gc2 = (GregorianCalendar) g2.clone();
+            gc1 = (GregorianCalendar) g1.clone();
+       } else {
+            gc2 = (GregorianCalendar) g1.clone();
+            gc1 = (GregorianCalendar) g2.clone();
+        }
+        gc1.clear(Calendar.MILLISECOND);
+        gc1.clear(Calendar.SECOND);
+        gc1.clear(Calendar.MINUTE);
+        gc1.clear(Calendar.HOUR_OF_DAY);
+        gc2.clear(Calendar.MILLISECOND);
+        gc2.clear(Calendar.SECOND);
+        gc2.clear(Calendar.MINUTE);
+        gc2.clear(Calendar.HOUR_OF_DAY);
+        while (gc1.before(gc2)) {
+            gc1.add(Calendar.DATE, 1);
+            interval++;
+        }
+    return interval;
+  }
+}
