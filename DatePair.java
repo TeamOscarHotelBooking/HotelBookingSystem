@@ -14,28 +14,41 @@ import java.time.LocalDate;
  */
 public class DatePair {
 
-  private LocalDate start;
-  private LocalDate end;
+	private LocalDate checkInDate;
+	private LocalDate checkOutDate;
+	// may include a field to represent personal info
 
-  public DatePair(LocalDate start, LocalDate end) {
-    this.start = start;
-    this.end = end;
-	//check start < end(or start <= end)
-  }
+	public DatePair(LocalDate checkInDate, LocalDate checkOutDate) {
+		// check checkInDate is before checkOutDate
+		if (!(checkInDate.isBefore(checkOutDate))) {
+			System.out.println("checkInDate should be prior to checkOutDate");
+			System.exit(-1);
+		}
+		/*
+		checkInDate = LocalDate.of(checkInDate.getYear(), 
+				checkInDate.getMonthValue(), checkInDate.getDayOfMonth());
+		checkOutDate = LocalDate.of(checkOutDate.getYear(), 
+				checkOutDate.getMonthValue(), checkOutDate.getDayOfMonth());
+		*/
+		// don't need to make a deep copy since LocalDate once constructed
+		// will never change
+		this.checkInDate = checkInDate;
+		this.checkOutDate = checkOutDate;
+	}
 
-  public LocalDate getStart() { return start; }
-  public LocalDate getEnd() { return end; }
+  public LocalDate getCheckInDate() { return checkInDate; }
+  public LocalDate getCheckOutDate() { return checkOutDate; }
 
   @Override
-  public int hashCode() { return start.hashCode() ^ end.hashCode(); }
+  public int hashCode() { return checkInDate.hashCode() ^ checkOutDate.hashCode(); }
 
   @Override
   public boolean equals(Object o) {
     if (o == null) return false;
     if (!(o instanceof DatePair)) return false;
     DatePair pairo = (DatePair) o;
-    return this.start.equals(pairo.getStart()) &&
-           this.end.equals(pairo.getEnd());
+    return this.checkInDate.equals(pairo.getCheckInDate()) &&
+           this.checkOutDate.equals(pairo.getCheckOutDate());
   }
   public static void main (String[] args) {
 	  LocalDate ld = LocalDate.now();

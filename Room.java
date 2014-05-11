@@ -37,11 +37,12 @@ public class Room {
 		this.state = RoomState.AVAILABLE;
     }
     
-    public Room (int number, RoomType type, double price, DateStruct ds){
+    public Room (int number, RoomType type, double price){
+		// no Date parameter, since we always want to start with no reservation
 		this.number = number;
 		this.type = type;
 		this.price = price;
-		this.Date =  ds;
+		this.Date =  new DateStruct();
 		this.state = RoomState.AVAILABLE;
     }
     
@@ -122,18 +123,42 @@ public class Room {
 		System.out.println(this.Date.toString());
 	}
 	
+	public void insert(DatePair dp) {
+		this.Date.insert(dp);
+		//System.out.println(this.Date.toString());
+	}
+	
 	public static void main (String [] args) {
-		ArrayList<DatePair> list = new ArrayList<DatePair>();
-		DatePair dp1 = new DatePair(LocalDate.now(), LocalDate.of(2014, Month.MAY, 25));
-		DatePair dp2 = new DatePair(LocalDate.of(2014, Month.JUNE, 3), LocalDate.of(2014, Month.JULY, 10));
-		list.add(dp1);
-		list.add(dp2);
-		DateStruct ds = new DateStruct(list);
-		
-		Room rm = new Room(204, RoomType.DOUBLE, 125.99, ds);
+		Room rm = new Room(204, RoomType.DOUBLE, 125.99);
+		DatePair dp1 = new DatePair(LocalDate.of(2015, Month.MAY, 6), LocalDate.of(2015, Month.MAY, 25));
+		DatePair dp2 = new DatePair(LocalDate.of(2015, Month.JUNE, 3), LocalDate.of(2015, Month.JULY, 10));
+		rm.insert(dp1);
+		rm.insert(dp2);
 		rm.printDates();
 		
-		//System.out.println(ds.toString());
+		//test-cases
+		//invalid DatePair construction
+		//DatePair dp3 = new DatePair(LocalDate.of(2013, Month.JULY, 16), LocalDate.of(2013, Month.JULY, 10));
+		
+		//insert before today
+		/*
+		DatePair dp3 = new DatePair(LocalDate.of(2013, Month.JUNE, 3), LocalDate.of(2013, Month.JULY, 10));
+		rm.insert(dp3);
+		*/
+		
+		//overlap case 1
+		/*
+		DatePair dp3 = new DatePair(LocalDate.of(2015, Month.MAY, 3), LocalDate.of(2015, Month.MAY, 7));
+		rm.insert(dp3);
+		*/
+		
+		//overlap case 2
+		/*
+		DatePair dp3 = new DatePair(LocalDate.of(2015, Month.MAY, 20), LocalDate.of(2015, Month.MAY, 27));
+		rm.insert(dp3);
+		*/
+		
+		
 	}
 }
 
