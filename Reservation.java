@@ -15,30 +15,31 @@ public class Reservation {
     private Hotel chosenHotel;
     private int idNumber;
     private Room chosenRoom;
+    private Location location;
+    private Location[] arrayOfLocations;
     
-    public Reservation() {
+    public Reservation(Location[] aol, String name, int id) {
+        arrayOfLocations = aol;
+        user = name;
+        idNumber = id;
     }
     
-    public void Search(String desiredLocation, String hotelName) {
-        Location targetLocation;
-        Hotel targetHotel;
-        Room freeRoom;
+    public void SearchForLocation(String desiredLocation) {
         for(int i=0; i<arrayOfLocations.length; i++) {
             if((arrayOfLocations[i]).getCity() == desiredLocation) {
-                targetLocation = arrayOfLocations[i];
+                location = arrayOfLocations[i];
             }
         }
-        /*Hotel[] hotelsInLocation = new Hotel[numHotels];
-        int numHotelsInLocations = 0;
-        for (int i = 0; i<arrayOfHotels.length; i++) {
-            if((arrayOfHotels[i].getLocation()).equals(location)) {
-                hotelsInLocation[numHotelsInLocation] = arrayOfHotels[i];
-            }
+        String hotelOptions = "The following hotels are located in " + location.getCity() + ": " + hotelsInLocation[0];
+        Hotel[] hotelsInLocation = location.getCityHotelDataBase();
+        for (int i = 1; i<hotelsInLocation.length; i++) {
+            hotelOptions = hotelOptions + ", " + hotelsInLocation.getName() ;
         }
-        return hotelsInLocation;*/
+        System.out.println(hotelOptions);
+        System.out.println("Which Hotel do you want to reserve?");
+        hotelName = userInput;
         targetHotel = targetLocation.SearchForHotel(hotelName);
         freeRoom = targetHotel.getFreeRoom();
         freeRoom.setState("booked");
     }
-    
 }
