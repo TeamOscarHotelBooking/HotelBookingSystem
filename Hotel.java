@@ -18,16 +18,71 @@ public class Hotel
     protected int floors;
     protected String HotelName;
     protected int NumberofRooms;
+    protected int NumberofRoomsSingle;
+    protected int NumberofRoomsDouble;
+    protected int NumberofRoomsSuites;
+    protected int singlePrice;
+    protected int doublePrice;
+    protected int suitePrice;
     protected String location;
     
     /**
      * Hotel Constructor 
      * @param HotelName
+     * @param NumberofRoomsSingle
+     * @param NumberofRoomsDouble
+     * @param NumberofRoomsSuites
      * @param NumberofRooms
+     * @param doublePrice
+     * @param suitePrice
+     * @param singlePrice
+     * @param location
      * @param floors
      * @param type
      * @param price 
      */
+    
+    public Hotel(String HotelName, int NumberofRoomsSingle, int NumberofRoomsDouble, int NumberofRoomsSuites, int singlePrice, int doublePrice, 
+            int suitePrice, int floors, String location)
+    {
+        this.HotelName = HotelName;
+        this.NumberofRoomsSingle = NumberofRoomsSingle;
+        this.NumberofRoomsDouble = NumberofRoomsDouble;
+        this.NumberofRoomsSuites = NumberofRoomsSuites;
+        this.singlePrice = singlePrice;
+        this.doublePrice = doublePrice;
+        this.suitePrice = suitePrice;
+        this.floors = floors;
+        this.location = location;
+        int RoomsperFloor = (int) (NumberofRoomsSingle + NumberofRoomsDouble + NumberofRoomsSuites)/floors;
+        
+        this.Rooms = new Room[floors][RoomsperFloor];
+        
+        int roomCount = 0;
+        
+        for (int i = 1; i <= floors; i++)
+        {
+            for (int j = 1; j <= RoomsperFloor; j++)
+            {
+                if (roomCount < NumberofRoomsSingle)
+                {
+                   Rooms[i-1][j-1] = new Room(j, RoomType.SINGLE, singlePrice);
+                }    
+                else if (roomCount >= NumberofRoomsSingle && roomCount < (NumberofRoomsSingle + NumberofRoomsDouble))
+                {
+                    Rooms[i-1][j-1] = new Room(j, RoomType.DOUBLE, doublePrice);
+                }
+                else
+                {
+                    Rooms[i-1][j-1] = new Room(j, RoomType.JUNIORSUITE, suitePrice);
+                }
+                roomCount++;
+            }
+        }
+        
+        
+    }
+    
     public Hotel(String HotelName, int NumberofRooms, int floors, RoomType type, double price, String location)
     {
         
@@ -111,7 +166,7 @@ public class Hotel
     {
         return this.Rooms;
     }
-    
+ 
 
     
     /**
