@@ -18,6 +18,9 @@ public class Hotel
     protected int floors;
     protected String HotelName;
     protected int NumberofRooms;
+    protected int numSinglesperFloor;
+    protected int numDoublesperFloor;
+    protected int numSuitesperFloor;
     protected int NumberofRoomsSingle;
     protected int NumberofRoomsDouble;
     protected int NumberofRoomsSuites;
@@ -42,33 +45,35 @@ public class Hotel
      * @param price 
      */
     
-    public Hotel(String HotelName, int NumberofRoomsSingle, int NumberofRoomsDouble, int NumberofRoomsSuites, double singlePrice, double doublePrice, 
-        double suitePrice, int floors, String location)
+    public Hotel(String HotelName, int numSinglesperFloor, int numDoublesperFloor, int numSuitesperFloor, double singlePrice, double doublePrice, 
+            double suitePrice, int floors, String location)
     {
         this.HotelName = HotelName;
-        this.NumberofRoomsSingle = NumberofRoomsSingle;
-        this.NumberofRoomsDouble = NumberofRoomsDouble;
-        this.NumberofRoomsSuites = NumberofRoomsSuites;
+        this.numSinglesperFloor = numSinglesperFloor;
+        this.numDoublesperFloor = numDoublesperFloor;
+        this.numSuitesperFloor = numSuitesperFloor;
+        this.NumberofRoomsSingle = numSinglesperFloor * floors;
+        this.NumberofRoomsDouble = numDoublesperFloor * floors;
+        this.NumberofRoomsSuites = numSuitesperFloor * floors;
         this.singlePrice = singlePrice;
         this.doublePrice = doublePrice;
         this.suitePrice = suitePrice;
         this.floors = floors;
         this.location = location;
-        int RoomsperFloor = (int) (NumberofRoomsSingle + NumberofRoomsDouble + NumberofRoomsSuites)/floors;
+        int RoomsperFloor = numSinglesperFloor + numDoublesperFloor + numSuitesperFloor;
         
         this.Rooms = new Room[floors][RoomsperFloor];
         
-        int roomCount = 0;
         
         for (int i = 1; i <= floors; i++)
         {
             for (int j = 1; j <= RoomsperFloor; j++)
             {
-                if (roomCount < NumberofRoomsSingle)
+                if (j < numSinglesperFloor)
                 {
                    Rooms[i-1][j-1] = new Room(j, RoomType.SINGLE, singlePrice);
                 }    
-                else if (roomCount >= NumberofRoomsSingle && roomCount < (NumberofRoomsSingle + NumberofRoomsDouble))
+                else if (j >= numSinglesperFloor && j < (numSinglesperFloor + numDoublesperFloor))
                 {
                     Rooms[i-1][j-1] = new Room(j, RoomType.DOUBLE, doublePrice);
                 }
@@ -76,7 +81,7 @@ public class Hotel
                 {
                     Rooms[i-1][j-1] = new Room(j, RoomType.JUNIORSUITE, suitePrice);
                 }
-                roomCount++;
+                
             }
         }
         
