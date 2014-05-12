@@ -21,9 +21,9 @@ public class Hotel
     protected int NumberofRoomsSingle;
     protected int NumberofRoomsDouble;
     protected int NumberofRoomsSuites;
-    protected int singlePrice;
-    protected int doublePrice;
-    protected int suitePrice;
+    protected double singlePrice;
+    protected double doublePrice;
+    protected double suitePrice;
     protected String location;
     
     /**
@@ -42,8 +42,8 @@ public class Hotel
      * @param price 
      */
     
-    public Hotel(String HotelName, int NumberofRoomsSingle, int NumberofRoomsDouble, int NumberofRoomsSuites, int singlePrice, int doublePrice, 
-            int suitePrice, int floors, String location)
+    public Hotel(String HotelName, int NumberofRoomsSingle, int NumberofRoomsDouble, int NumberofRoomsSuites, double singlePrice, double doublePrice, 
+        double suitePrice, int floors, String location)
     {
         this.HotelName = HotelName;
         this.NumberofRoomsSingle = NumberofRoomsSingle;
@@ -167,7 +167,15 @@ public class Hotel
         return this.Rooms;
     }
  
+    public Room getRoom(int floor, int roomNum)
+    {
+        return this.Rooms[floor-1][roomNum];
+    }
 
+    public Room getRoom(int roomNumber)
+    {
+        return this.Rooms[(roomNumber-(roomNumber%100))-1][(roomNumber%100];
+    }
     
     /**
      * Sets a discount for all the rooms in the hotels
