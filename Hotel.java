@@ -174,7 +174,7 @@ public class Hotel
 
     public Room getRoom(int roomNumber)
     {
-        return this.Rooms[(roomNumber-(roomNumber%100))-1][(roomNumber%100];
+        return this.Rooms[(roomNumber-(roomNumber%100)/100)][(roomNumber%100];
     }
     
     /**
