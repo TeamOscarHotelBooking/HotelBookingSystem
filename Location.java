@@ -10,12 +10,17 @@ package hbs;
  *
  * @author Naif Almakhdhub
  */
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.lang.Object;
-public class Location {
+import java.util.ArrayList;
+public class Location implements Serializable {
     
-    protected ArrayList<Hotel> CityHotelDataBase;
-    protected String City;
+    private ArrayList<Hotel> CityHotelDataBase;
+    private String City;
+    
+    public Location(){
+        
+    }
     
     /**
      * Constructor
@@ -24,6 +29,16 @@ public class Location {
     public Location(String City){
         this.CityHotelDataBase = new ArrayList<Hotel>();
         this.City = City;
+    }
+    
+    /**
+     * Copy Constructor
+     * @param copyLocation 
+     * @author Naif Almakhdhub
+     */
+    public Location(Location copyLocation){
+        this.CityHotelDataBase = copyLocation.getCityHotelDataBase();
+        this.City = copyLocation.getCity();
     }
     
     /**
@@ -40,25 +55,47 @@ public class Location {
     }
     
     /**
+     * Observer of City Hotel Data Base
+     * @return CityHotelDataBase
+     */
+    public ArrayList<Hotel> getCityHotelDataBase(){
+        return this.CityHotelDataBase;
+    }
+    
+    /**
      * Observer of the City name
      */
-    public String getCity(Location CurrentLocation){
+    public String getCity(){
         return this.City;
     }
     
     /**
      * Temporary method to check the code
      * @param HotelName
-     * @return 
+     * @return Hotel
      */
-    public Hotel SearchForHotel(Hotel HotelName){
-        
+    public Hotel getHotel(Hotel HotelName){
+            
             if(CityHotelDataBase.indexOf(HotelName)!= -1){      // This condition because the function will return -1 if the hotels does not exist
                 int DesiredHotel = CityHotelDataBase.indexOf(HotelName);
-                return CityHotelDataBase.get(DesiredHotel);
+                return this.CityHotelDataBase.get(DesiredHotel);
             }
         
         return null;
+    }
+    
+    /**
+     * Observer of the state of a specific room in a desired hotel at a certain location
+     * @param hotel
+     * @param floor
+     * @param RoomNumber
+     * @return State of the room
+     * @author Naif Almakhdhub
+     */
+    public RoomState getHotelRoomState(Hotel hotel, int floor, int RoomNumber){
+        
+        return this.getHotel(hotel).getRoomState(floor, RoomNumber);
+        
     }
     
     
