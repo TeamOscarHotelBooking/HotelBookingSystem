@@ -31,15 +31,7 @@ public class Location implements Serializable {
         this.City = City;
     }
     
-    /**
-     * Copy Constructor
-     * @param copyLocation 
-     * @author Naif Almakhdhub
-     */
-    public Location(Location copyLocation){
-        this.CityHotelDataBase = copyLocation.getCityHotelDataBase();
-        this.City = copyLocation.getCity();
-    }
+    
     
     /**
      * Adds a hotel to the data base
