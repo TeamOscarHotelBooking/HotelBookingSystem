@@ -28,6 +28,7 @@ public class Hotel
     protected double doublePrice;
     protected double suitePrice;
     protected String location;
+    protected int RoomsperFloor;
     
     /**
      * Hotel Constructor 
@@ -60,7 +61,7 @@ public class Hotel
         this.suitePrice = suitePrice;
         this.floors = floors;
         this.location = location;
-        int RoomsperFloor = numSinglesperFloor + numDoublesperFloor + numSuitesperFloor;
+        this.RoomsperFloor = numSinglesperFloor + numDoublesperFloor + numSuitesperFloor;
         
         this.Rooms = new Room[floors][RoomsperFloor];
         
@@ -69,11 +70,11 @@ public class Hotel
         {
             for (int j = 1; j <= RoomsperFloor; j++)
             {
-                if (j < numSinglesperFloor)
+                if (j <= numSinglesperFloor)
                 {
                    Rooms[i-1][j-1] = new Room(j, RoomType.SINGLE, singlePrice);
                 }    
-                else if (j >= numSinglesperFloor && j < (numSinglesperFloor + numDoublesperFloor))
+                else if (j > numSinglesperFloor && j <= (numSinglesperFloor + numDoublesperFloor))
                 {
                     Rooms[i-1][j-1] = new Room(j, RoomType.DOUBLE, doublePrice);
                 }
@@ -167,6 +168,12 @@ public class Hotel
     
     }
     
+    public String getHotelName()
+    {
+        return this.HotelName;
+    }
+   
+    
     public Room[][] getRooms()
     {
         return this.Rooms;
@@ -174,13 +181,13 @@ public class Hotel
  
     public Room getRoom(int floor, int roomNum)
     {
-        return this.Rooms[floor-1][roomNum];
+        return this.Rooms[floor-1][roomNum - 1];
     }
 
-    public Room getRoom(int roomNumber)
-    {
-        return this.Rooms[(roomNumber-(roomNumber%100)/100)][(roomNumber%100];
-    }
+//    public Room getRoom(int roomNumber)
+//    {
+//        return this.Rooms[(roomNumber-(roomNumber%100)/100)][(roomNumber%100];
+//    }
     
     /**
      * Sets a discount for all the rooms in the hotels
@@ -189,7 +196,7 @@ public class Hotel
     public void setRoomDicount(Double Discount){
        
        for (int i = 0 ; i<this.floors;i++){
-           for (int j = 0; j < this.RoomsPerFloor; j++)
+           for (int j = 0; j < this.RoomsperFloor; j++)
             {
                 this.Rooms[i][j].DiscountPrice(Discount);
             }
@@ -214,7 +221,7 @@ public class Hotel
      */
     public void setRoomDicount( RoomType type, Double Discount){
         for (int i = 0 ; i<this.floors;i++){
-            for (int j = 0 ; j<this.RoomsPerFloor; j++){
+            for (int j = 0 ; j<this.RoomsperFloor; j++){
                 if (this.Rooms[i][j].type == type){
                     this.Rooms[i][j].DiscountPrice(Discount);
                 }
