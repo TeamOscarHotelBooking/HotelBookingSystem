@@ -65,7 +65,7 @@ public class Reservation {
             roomOptions = roomOptions + ", " + rooms[i].toString() ;
         }
         System.out.println(roomOptions);
-        System.out.println("Which room do you want to reserve?");
+        System.out.println("Enter the room numbers for each room you want to reserve seperated by commas:");
         Scanner keyboard = new Scanner(System.in);
         int j=0;
         while (keyboard.hasNextInt()){

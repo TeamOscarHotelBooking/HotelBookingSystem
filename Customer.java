@@ -25,25 +25,25 @@ toString();
 public class Customer implements User { 
    
     private String name;
-    private String passward;
+    private String password;
     private ArrayList<Reservation> reservation;
     private int creditcard;
     
     //default constructor
     public Customer(){
         this.name=null;
-        this.passward="0123456789";
+        this.password="0123456789";
     }
     // constructor a customer using name
     public Customer(String name){
         this.name=name;
-        this.passward="0123456789";
+        this.password="0123456789";
     }
-    public void setpassward(String passward){
-        this.passward=passward;
+    public void setpassword(String password){
+        this.password=password;
     }
-    public String getpassward(){
-        return this.passward;
+    public String getpassword(){
+        return this.password;
     }
     public String showname(){
         return this.name;

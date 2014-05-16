@@ -23,7 +23,7 @@ public class HBS {
     public static void main(String[] args) {
      
        Location[] arrayOfLocations = new Location[10]; 
-       ArrayList<User> userList = new ArrayList<User>;
+       ArrayList<Customer> customerList = new ArrayList<Customer>;
        
        Hotel NU = new Hotel( "NU", 30, 3, RoomType.SINGLE, 100); // this will set a hotel "NU" with 30 rooms, 3 floors and
        Hotel Hilton = new Hotel( "Hilton", 30, 3, RoomType.SINGLE, 100);
