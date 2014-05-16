@@ -28,6 +28,67 @@ public class DateStruct {
 	public DateStruct(ArrayList<DatePair> ds) {	this.ds = ds; }
 	
 	/**
+	 * return 0 for success, return -1 for failure
+	 * @param dp
+	 * @return 
+	 */
+	public int cancel(DatePair dp) {
+		int ret = -1;
+		for (int i = 0; i < ds.size(); ++i) {
+			if (ds.get(i).equals(dp)) {
+				ds.remove(i);
+				ret = 0;
+			}
+		}
+		return ret;
+	}
+	
+	/**
+	 * does both throw exception and return BOOKED/AVAILABLE
+	 * @param dp
+	 * @return 
+	 */
+	public RoomState search(DatePair dp) {
+		
+		LocalDate attemptCheckInDate = dp.getCheckInDate();
+		LocalDate attemptCheckOutDate = dp.getCheckOutDate();
+		
+		if (!(attemptCheckInDate.isEqual(LocalDate.now()) || 
+				attemptCheckInDate.isAfter(LocalDate.now()))) {
+			throw new UnsupportedOperationException("invalid DatePair0");
+			//here throw exception makes more sense
+		}
+		
+		if (ds.size() == 0) {
+			//ds.add(dp);
+			return RoomState.AVAILABLE;
+		}
+		
+		for (int i = 0; i < ds.size(); ++i) {
+			LocalDate currentCheckInDate = ds.get(i).getCheckInDate();
+			LocalDate currentCheckOutDate = ds.get(i).getCheckOutDate();
+			if (attemptCheckOutDate.isBefore(currentCheckInDate) || 
+				attemptCheckOutDate.isEqual(currentCheckInDate)) {
+				//ds.add(i, dp);
+				return RoomState.AVAILABLE;
+			}
+			else if (attemptCheckOutDate.isAfter(currentCheckInDate) && 
+					(attemptCheckOutDate.isBefore(currentCheckOutDate) ||
+					attemptCheckOutDate.isEqual(currentCheckOutDate))) {
+				//throw new UnsupportedOperationException("invalid DatePair1");
+				return RoomState.BOOKED;
+			}
+			else if ((attemptCheckOutDate.isAfter(currentCheckOutDate) &&
+					attemptCheckInDate.isBefore(currentCheckOutDate))) {
+				//throw new UnsupportedOperationException("invalid DatePair2");
+				return RoomState.BOOKED;
+			}
+		}
+		//ds.add(ds.size(), dp);
+		return RoomState.AVAILABLE;
+	}
+	
+	/**
 	 * need to check return value
 	 * Or we can do this by throw an exception
 	 * @param dp
@@ -38,76 +99,36 @@ public class DateStruct {
 		LocalDate attemptCheckInDate = dp.getCheckInDate();
 		LocalDate attemptCheckOutDate = dp.getCheckOutDate();
 		
-		System.out.println("omg");
-		System.out.println(attemptCheckInDate.toString());
-		System.out.println(attemptCheckOutDate.toString());
-		System.out.println(ds.size());
-		
-		
 		// check whether attemptCheckInDate is valid comparing to current Date
 		if (!(attemptCheckInDate.isEqual(LocalDate.now()) || 
 				attemptCheckInDate.isAfter(LocalDate.now()))) {
-			System.out.println("invalid DatePair0");
-			System.exit(-1);
+			throw new UnsupportedOperationException("invalid DatePair0");
 		}
 		
 		if (ds.size() == 0) {
 			ds.add(dp);
 			return;
 		}
-		System.out.println(ds.size());
+		
 		for (int i = 0; i < ds.size(); ++i) {
 			LocalDate currentCheckInDate = ds.get(i).getCheckInDate();
 			LocalDate currentCheckOutDate = ds.get(i).getCheckOutDate();
 			
-			System.out.println(i);
-			System.out.println(currentCheckInDate.toString());
-			System.out.println(currentCheckOutDate.toString());
-			
 			// before or on that date
 			if (attemptCheckOutDate.isBefore(currentCheckInDate) || 
 				attemptCheckOutDate.isEqual(currentCheckInDate)) {
-				System.out.println(ds.size());
 				ds.add(i, dp);
-				System.out.println(ds.size());
 			}
-			/*
-			else if (attemptCheckOutDate.isAfter(currentCheckInDate) && 
-						(attemptCheckOutDate.isBefore(currentCheckOutDate) ||
-						attemptCheckOutDate.isEqual(currentCheckOutDate))) {
-				//return -1;
-			}
-			*/
 			else if (attemptCheckOutDate.isAfter(currentCheckInDate) && 
 					(attemptCheckOutDate.isBefore(currentCheckOutDate) ||
 					attemptCheckOutDate.isEqual(currentCheckOutDate))) {
-				//System.out.println(attemptCheckOutDate.isAfter(currentCheckInDate));
-				//System.out.println(attemptCheckOutDate.isBefore(currentCheckOutDate));
-				//System.out.println(attemptCheckOutDate.isEqual(currentCheckOutDate));
-				//System.out.println(attemptCheckOutDate.toString());
-				//System.out.println(currentCheckOutDate.toString());
-				System.out.println("invalid DataPair1");
-				System.exit(-1);
+				throw new UnsupportedOperationException("invalid DatePair1");
 			}
-			/*
-			else if (attemptCheckOutDate.isAfter(currentCheckOutDate) &&
-					attemptCheckInDate.isBefore(currentCheckOutDate)) {
-				//return -1;
-			}
-			*/
 			else if ((attemptCheckOutDate.isAfter(currentCheckOutDate) &&
 					attemptCheckInDate.isBefore(currentCheckOutDate))) {
-				System.out.println("invalid DataPair2");
-				System.exit(-1);
+				//System.exit(-1);
+				throw new UnsupportedOperationException("invalid DatePair2");
 			}
-			
-			/*
-			else if (attemptCheckInDate.isAfter(currentCheckOutDate) &&
-					i == ds.size() - 1) {
-				ds.add(ds.size(), dp);
-			}
-			*/
-			// otherwise deal in the next iteration
 		}
 		ds.add(ds.size(), dp);
 		
@@ -149,14 +170,3 @@ public class DateStruct {
 		System.out.println(ds.toString());
 	}
 }
-
-/*
-LocalDate today = LocalDate.now();
-LocalDate birthday = LocalDate.of(1960, Month.JANUARY, 1);
-
-Period p = Period.between(birthday, today);
-long p2 = ChronoUnit.DAYS.between(birthday, today);
-System.out.println("You are " + p.getYears() + " years, " + p.getMonths() +
-                   " months, and " + p.getDays() +
-                   " days old. (" + p2 + " days total)");
-*/

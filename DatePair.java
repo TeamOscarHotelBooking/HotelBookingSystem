@@ -21,15 +21,10 @@ public class DatePair {
 	public DatePair(LocalDate checkInDate, LocalDate checkOutDate) {
 		// check checkInDate is before checkOutDate
 		if (!(checkInDate.isBefore(checkOutDate))) {
-			System.out.println("checkInDate should be prior to checkOutDate");
-			System.exit(-1);
+			//System.exit(-1);
+			throw new UnsupportedOperationException("checkInDate should be prior to checkOutDate");
 		}
-		/*
-		checkInDate = LocalDate.of(checkInDate.getYear(), 
-				checkInDate.getMonthValue(), checkInDate.getDayOfMonth());
-		checkOutDate = LocalDate.of(checkOutDate.getYear(), 
-				checkOutDate.getMonthValue(), checkOutDate.getDayOfMonth());
-		*/
+
 		// don't need to make a deep copy since LocalDate once constructed
 		// will never change
 		this.checkInDate = checkInDate;
