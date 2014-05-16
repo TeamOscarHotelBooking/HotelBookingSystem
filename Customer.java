@@ -11,6 +11,17 @@ import java.util.ArrayList;
  * @author zhangzy
  *
  */
+/*
+I have some suggestions about the reservation class based on my implements of the customer class:
+IsEqual();             compare the this reservation ID to a given ID, see if it is the reservation we want to get.
+Room[] searchForRoom(hotel, datepair);      return all the rooms which is available during datepairin this hotel.
+confirmreservation(Hotel, datepair);{
+    random generate a reservation ID;
+    set all of the reservation info;
+    push it into the reservation arraylist.
+}
+toString();     
+*/
 public class Customer implements User { 
    
     private String name;
@@ -31,6 +42,9 @@ public class Customer implements User {
     public void setpassward(String passward){
         this.passward=passward;
     }
+    public String getpassward(){
+        return this.passward;
+    }
     public String showname(){
         return this.name;
     }
@@ -38,19 +52,29 @@ public class Customer implements User {
         this.creditcard=credit;   
     }
     @Override
-    public void reserve(){
-        Reservation res=new Reservation();
+    public void reserve(Location[] aol,int id,String desiredlocation, DatePair date ){
+        Reservation res=new Reservation(aol);
+        res.confirmReservation(id, desiredlocation, this.name, date);
         /* setup the reservation based on the customer's choice.
         need more details in reservation class.
         */
         reservation.add(res); // add the new reservation to the list.
     }
+    
     @Override
     // cancel a reservation  
-    public void cancel(Reservation res){
-        if (reservation.contains(res))
-            reservation.remove(res);
-        else 
+    public void cancel(int id){
+      //  Reservation res = new Reservation();
+        boolean state=true;
+        for (int i=0; i<this.reservation.size();i++){
+           if( reservation.get(i).getIDNumber()==id){
+               reservation.get(i).cancelReservation();
+               reservation.remove(i);
+               state=false;
+               break;
+           }
+        }
+        if(state==true)
             System.out.println("Can't find the reservation!");
     }
     @Override
