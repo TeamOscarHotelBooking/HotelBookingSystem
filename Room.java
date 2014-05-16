@@ -23,7 +23,6 @@ public class Room {
     protected RoomType type;
     protected double price;
     protected DateStruct Date;
-    protected RoomState state;
     
     /**
      * Default Constructor
@@ -34,7 +33,6 @@ public class Room {
 		this.type = RoomType.SINGLE;
 		this.price = 100;
 		this.Date =  new DateStruct();
-		this.state = RoomState.AVAILABLE;
     }
     
     public Room (int number, RoomType type, double price){
@@ -43,7 +41,6 @@ public class Room {
 		this.type = type;
 		this.price = price;
 		this.Date =  new DateStruct();
-		this.state = RoomState.AVAILABLE;
     }
     
     /**
@@ -62,13 +59,6 @@ public class Room {
         this.price = price;
     }
     
-    /**
-     * Room State Transformer
-     * @param state 
-     */
-    public void setState(RoomState state){
-        this.state = state;
-    }
     
     /**
      * Room Type observer
@@ -87,14 +77,6 @@ public class Room {
     }
     
     /**
-     * Room State observer
-     * @return state
-     */
-    public RoomState getState(){
-        return this.state;
-    }
-    
-    /**
      * Function to make a discount on a room (in case of a special offer)
      * Will change the original price to new discounted one
      * @param DiscountPercentage 
@@ -107,20 +89,26 @@ public class Room {
             System.out.println("Non authorized Discount");
         }
     }
-    
-    /**
-     * Function to check if the room is booked or not 
-     * @return true if the room is available
-     */
-    public boolean isEmpty(){
-        if (this.state == RoomState.BOOKED){
-            return false;
-        }
-        return true;
-    }
 	
 	public void printDates() {
 		System.out.println(this.Date.toString());
+	}
+	
+	/**
+	 * 
+	 * @param dp
+	 * @return 
+	 */ 
+	public RoomState search(DatePair dp) {
+		return Date.search(dp);
+	}
+	
+	/**
+	 * return 0 for success, return -1 for failure
+	 * @param dp 
+	 */
+	public int cancel(DatePair dp) {
+		return Date.cancel(dp);
 	}
 	
 	public void insert(DatePair dp) {
@@ -138,86 +126,34 @@ public class Room {
 		
 		//test-cases
 		//invalid DatePair construction
-		//DatePair dp3 = new DatePair(LocalDate.of(2013, Month.JULY, 16), LocalDate.of(2013, Month.JULY, 10));
+		try {
+			DatePair dp3 = new DatePair(LocalDate.of(2015, Month.JULY, 16), LocalDate.of(2013, Month.JULY, 10));
+		} catch (UnsupportedOperationException e) {
+			System.out.println("exception: invalid DatePair construction");
+		}
 		
 		//insert before today
-		/*
-		DatePair dp3 = new DatePair(LocalDate.of(2013, Month.JUNE, 3), LocalDate.of(2013, Month.JULY, 10));
-		rm.insert(dp3);
-		*/
+		try {
+			DatePair dp3 = new DatePair(LocalDate.of(2013, Month.JUNE, 3), LocalDate.of(2013, Month.JULY, 10));
+			rm.insert(dp3);
+		} catch (UnsupportedOperationException e) {
+			System.out.println("exception: insert before today");
+		}
 		
 		//overlap case 1
-		/*
-		DatePair dp3 = new DatePair(LocalDate.of(2015, Month.MAY, 3), LocalDate.of(2015, Month.MAY, 7));
-		rm.insert(dp3);
-		*/
+		try {
+			DatePair dp3 = new DatePair(LocalDate.of(2015, Month.MAY, 3), LocalDate.of(2015, Month.MAY, 7));
+			rm.insert(dp3);
+		} catch (UnsupportedOperationException e) {
+			System.out.println("exception: overlap case 1");
+		}
 		
 		//overlap case 2
-		/*
-		DatePair dp3 = new DatePair(LocalDate.of(2015, Month.MAY, 20), LocalDate.of(2015, Month.MAY, 27));
-		rm.insert(dp3);
-		*/
-		
-		
+		try {
+			DatePair dp3 = new DatePair(LocalDate.of(2015, Month.MAY, 20), LocalDate.of(2015, Month.MAY, 27));
+			rm.insert(dp3);
+		} catch (UnsupportedOperationException e) {
+			System.out.println("exception: overlap case 2");
+		}
 	}
 }
-
-
-
-
-
-
-
-/*
-
- 
-public class Room {
-	
-	private int price;
-	private int floorNum;
-	private String roomNumber;
-	int roomType; // could be Enum
-	private Hotel hotel_ref;
-	//boolean[] state;
-	//details[];
-	
-	//c'tors
-	public Room() {
-		price = -1;
-		floorNum = 0;
-		roomNumber = "";
-		hotel_ref = null;
-	}
-	public Room(int price, int floorNum, String roomNumber, int roomType, Hotel hotel_ref) {
-		this.price = price;
-		this.floorNum = floorNum;
-		this.roomNumber = roomNumber;
-		this.roomType = roomType;
-		this.hotel_ref = hotel_ref;
-	}
-	//changeState();
-	public int getPrice() {
-		return price;
-	}
-	public int getFloorNum() {
-		return floorNum;
-	}
-	public String getRoomNumber() {
-		return roomNumber;
-	}
-	public int getType() {
-		return roomType;
-	}
-	public String toString() {
-		return	"Room: " + roomNumber + "\n" +
-				"Type: " + roomType + "\n" +
-				"Floor#: " + floorNum + "\n" +
-				"Price: " + price + "\n" +
-				"Belongs to: " + hotel_ref.toString() + "\n";
-	}
-	//showDetails();
-	public Hotel showBelong() {
-		return hotel_ref;
-	}
-}
-*/
