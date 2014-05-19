@@ -6,14 +6,13 @@
 
 package hbs;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 /**
  *
  * @author Shuo Zhang <shuozhang2014@u.northwestern.edu>
  */
-public class DatePair implements Serializable {
+public class DatePair {
 
 	private LocalDate checkInDate;
 	private LocalDate checkOutDate;

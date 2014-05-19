@@ -12,9 +12,13 @@ package hbs;
  */
 import java.io.*;
 import java.text.*;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class HBS {
 
@@ -24,26 +28,27 @@ public class HBS {
    
     
     public static void main(String[] args) {
-     
-       Location[] arrayOfLocations = new Location[10]; 
-       ArrayList<Customer> customerList = new ArrayList<Customer>;
-       
-       Hotel NU = new Hotel( "NU", 30, 3, RoomType.SINGLE, 100); // this will set a hotel "NU" with 30 rooms, 3 floors and
-       Hotel Hilton = new Hotel( "Hilton", 30, 3, RoomType.SINGLE, 100);
-                                                                 // a room price of 100
-       NU.setRoomDicount(1,10, 0.7);  // set a discout of 70% on room 10 of floor 1
-       System.out.println(NU.Rooms[0][9].getPrice());     // check the price of room 13 to see the discount
-       System.out.println(NU.Rooms[0][8].getPrice());     // check the price of a random room to compare
-       System.out.println(NU.Rooms[0][7].getType());
-       
-       
-       Location Chicago = new Location("Chicago");
-       Chicago.AddHoteltoDataBase(NU);
-       Chicago.AddHoteltoDataBase(Hilton);
-       
-       Hotel test = Chicago.SearchForHotel(Hilton);
-       System.out.println(test.HotelName);
-        
+		
+		Hotel h1 = new Hotel("h1", 10, 20, 30, 100, 200, 300, 3, "Chicago");
+		Hotel h2 = new Hotel("h2", 10, 20, 30, 100, 200, 300, 3, "Chicago");
+		Hotel h3 = new Hotel("h3", 10, 20, 30, 100, 200, 300, 3, "Evanston");
+		Hotel h4 = new Hotel("h4", 10, 20, 30, 100, 200, 300, 3, "Evanston");
+		Location loc1 = new Location("Chicago");
+		Location loc2 = new Location("Evanston");
+		loc1.AddHoteltoDataBase(h1);
+		loc1.AddHoteltoDataBase(h2);
+		loc2.AddHoteltoDataBase(h3);
+		loc2.AddHoteltoDataBase(h4);
+		ArrayList<Location> database = new ArrayList<Location>();
+		database.add(loc1);
+		database.add(loc2);
+		Reservation res = new Reservation(database);
+		res.SearchForLocation("Chicago");
+		
+		DatePair dp1 = new DatePair(LocalDate.of(2015, Month.MAY, 6), LocalDate.of(2015, Month.MAY, 25));
+		res.SearchForDate(dp1);
+		
+		
     }
     
     /**
@@ -87,4 +92,5 @@ public class HBS {
         
         return DataBase;
     }
+	
 }

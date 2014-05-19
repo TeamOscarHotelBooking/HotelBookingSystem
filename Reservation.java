@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 
-package HBS;
+package hbs;
 import java.util.Scanner;
 //import java.io.Serializable;
 //import java.lang.Object;
@@ -21,32 +21,31 @@ public class Reservation {
     private int idNumber;
     private Room[] chosenRoom;
     private Location location;
-    private Location[] arrayOfLocations;  // Why put it in the reservation class. It can be a public database.
+    private ArrayList<Location> arrayOfLocations;  // Why put it in the reservation class. It can be a public database.
     private Boolean isCancelled;    // 
     private double TotalCost;
     private DatePair chosenDate;
     // better to generate an ID by system
     
-    public Reservation(Location[] aol) {
+    public Reservation(ArrayList<Location> aol) {
         arrayOfLocations = aol;
         user = null;
         idNumber = 0;
         TotalCost=0;
         isCancelled = false;
-        chosenDate=null;
         
     }
     
     public void SearchForLocation(String desiredLocation) {
-        for(int i=0; i<arrayOfLocations.length; i++) {
-            if((arrayOfLocations[i]).getCity() == desiredLocation) {
-                location = arrayOfLocations[i];
+        for(int i=0; i<arrayOfLocations.size(); i++) {
+            if((arrayOfLocations.get(i).getCity()).equals(desiredLocation)) {
+                location = arrayOfLocations.get(i);
             }
         }
         ArrayList<Hotel> hotelsInLocation = location.getCityHotelDataBase();
-        String hotelOptions = "The following hotels are located in " + location.getCity() + ": " + hotelsInLocation.get(0);
+        String hotelOptions = "The following hotels are located in " + location.getCity() + ": " + hotelsInLocation.get(0).getHotelName();
         for (int i = 1; i<hotelsInLocation.size(); i++) {
-            hotelOptions = hotelOptions + ", " + (hotelsInLocation.get(0)).getHotelName() ;
+            hotelOptions = hotelOptions + ", " + (hotelsInLocation.get(i)).getHotelName() ;
         }
         System.out.println(hotelOptions);
         System.out.println("Which Hotel do you want to reserve?");
@@ -59,15 +58,18 @@ public class Reservation {
         }
     }
     
-    public void SearchForDate(Hotel hotel, DatePair date){
-        chosenDate=date;
-        Room[] rooms = hotel.getFreeRoom(date);
+    public void SearchForDate(DatePair date){
+        chosenDate = date;
+		chosenHotel.getHotelName();
+		//chosenHotel.getFreeRooms(date);
+        //Room[] rooms = chosenHotel.getFreeRooms(date);
+		/*
         String roomOptions = "The following rooms are available : " + rooms[0].toString();
         for (int i = 1; i<rooms.length; i++) {
             roomOptions = roomOptions + ", " + rooms[i].toString() ;
         }
         System.out.println(roomOptions);
-        System.out.println("Which room do you want to reserve?");
+        System.out.println("Enter the room numbers for each room you want to reserve seperated by commas:");
         Scanner keyboard = new Scanner(System.in);
         int j=0;
         while (keyboard.hasNextInt()){
@@ -81,8 +83,9 @@ public class Reservation {
             }
         }
         for(int i=0; i<j; i++)
-            chosenRoom[i].insert(chosenDate);
-    }
+        chosenRoom[i].insert(chosenDate);
+				*/
+    } 
     
     public void CalculateCost(Room[] rooms){
         for(int i=0; i<rooms.length; i++){
@@ -94,7 +97,7 @@ public class Reservation {
         user=name;
         idNumber=ID;
         this.SearchForLocation(desiredLocation);
-        this.SearchForDate(chosenHotel, date);
+        this.SearchForDate(date);
         this.CalculateCost(chosenRoom);
         // Add the confiremed reservation to the arraylist of reservation generated in Main function
     }
@@ -102,7 +105,7 @@ public class Reservation {
     public void cancelReservation() {
         isCancelled = false;
         for(int i=0; i<chosenRoom.length; i++)
-            chosenRoom[i].cancel(this.chosendate);
+            chosenRoom[i].cancel(this.chosenDate);
     }
     
     public String getUser() {

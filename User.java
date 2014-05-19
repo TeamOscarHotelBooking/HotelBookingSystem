@@ -4,7 +4,9 @@
  * and open the template in the editor.
  */
 
-package HBS;
+package hbs;
+
+import java.util.ArrayList;
 
 /**
  *
@@ -15,7 +17,7 @@ public interface User {
     //void setpassward(String passward);
     // The method is to set user's passward.
     
-    void reserve(Location[] aol ,int id, String location, DatePair date);
+    void reserve(ArrayList<Location> aol ,int id, String location, DatePair date);
     // The method is to generate a new reservation object based on the user's choice for rooms.
     // Add the reservation info into a list. 
     void cancel(int ID);

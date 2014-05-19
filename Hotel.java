@@ -74,15 +74,15 @@ public class Hotel implements Serializable
             {
                 if (j <= numSinglesperFloor)
                 {
-                   Rooms[i-1][j-1] = new Room(j, RoomType.SINGLE, singlePrice);
+                   Rooms[i-1][j-1] = new Room(j, RoomType.SINGLE, singlePrice, i);
                 }    
                 else if (j > numSinglesperFloor && j <= (numSinglesperFloor + numDoublesperFloor))
                 {
-                    Rooms[i-1][j-1] = new Room(j, RoomType.DOUBLE, doublePrice);
+                    Rooms[i-1][j-1] = new Room(j, RoomType.DOUBLE, doublePrice, i);
                 }
                 else
                 {
-                    Rooms[i-1][j-1] = new Room(j, RoomType.JUNIORSUITE, suitePrice);
+                    Rooms[i-1][j-1] = new Room(j, RoomType.JUNIORSUITE, suitePrice, i);
                 }
                 
             }
@@ -106,7 +106,7 @@ public class Hotel implements Serializable
         {
             for (int j = 1; j <= roomsPerFloor; j++)
             {
-                Rooms[i-1][j-1] = new Room(j, type, price);
+                Rooms[i-1][j-1] = new Room(j, type, price, i);
             }
         }
         
@@ -154,15 +154,15 @@ public class Hotel implements Serializable
             {
                 if (roomCount < numSingles)
                 {
-                   Rooms[i-1][j-1] = new Room(j, RoomType.SINGLE, singlePrice);
+                   Rooms[i-1][j-1] = new Room(j, RoomType.SINGLE, singlePrice, i);
                 }    
                 else if (roomCount >= numSingles && roomCount < (numSingles + numDoubles))
                 {
-                    Rooms[i-1][j-1] = new Room(j, RoomType.DOUBLE, doublePrice);
+                    Rooms[i-1][j-1] = new Room(j, RoomType.DOUBLE, doublePrice, i);
                 }
                 else
                 {
-                    Rooms[i-1][j-1] = new Room(j, RoomType.JUNIORSUITE, JRSuitePrice);
+                    Rooms[i-1][j-1] = new Room(j, RoomType.JUNIORSUITE, JRSuitePrice, i);
                 }
                 roomCount++;
             }
@@ -175,18 +175,7 @@ public class Hotel implements Serializable
         return this.HotelName;
     }
    
-    
-    public Room[][] getRooms()
-    {
-        return this.Rooms;
-    }
- 
-    public Room getRoom(int floor, int roomNum)
-    {
-        return this.Rooms[floor-1][roomNum - 1];
-    }
-    
-    public Room[] getFreeRooms(DatePair dp)
+	public Room[] getFreeRooms(DatePair dp)
     {
         //Room[] returnRoom = new Room[NumberofRooms];
         int count=0;
@@ -209,6 +198,17 @@ public class Hotel implements Serializable
             }
         }
         return returnRoom;
+    }
+
+    
+    public Room[][] getRooms()
+    {
+        return this.Rooms;
+    }
+ 
+    public Room getRoom(int floor, int roomNum)
+    {
+        return this.Rooms[floor-1][roomNum - 1];
     }
 
 //    public Room getRoom(int roomNumber)
@@ -249,7 +249,7 @@ public class Hotel implements Serializable
     public void setRoomDicount( RoomType type, Double Discount){
         for (int i = 0 ; i<this.floors;i++){
             for (int j = 0 ; j<this.RoomsperFloor; j++){
-                if (this.Rooms[i][j].type == type){
+                if (this.Rooms[i][j].getType() == type){
                     this.Rooms[i][j].DiscountPrice(Discount);
                 }
             }
@@ -273,7 +273,7 @@ public class Hotel implements Serializable
         
         for (int i=SartingFloorRange ; i<=EndingFloorRange;i++){
             for (int j=StartingRoomRange ; j<=EndingRoomRange;j++){
-                if (this.Rooms[i-1][j-1].type == type){
+                if (this.Rooms[i-1][j-1].getType() == type){
                     this.Rooms[i-1][j-1].DiscountPrice(Discount);
                 }
             }

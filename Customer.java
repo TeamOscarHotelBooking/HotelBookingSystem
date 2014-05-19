@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 
-package HBS;
+package hbs;
 import java.util.ArrayList;
-import java.util.Scanner;
 /**
  *
  * @author zhangzy
@@ -53,10 +52,9 @@ public class Customer implements User {
         this.creditcard=credit;   
     }
     @Override
-    public void reserve(Location[] aol,int id,String desiredlocation, DatePair date ){
+    public void reserve(ArrayList<Location> aol,int id,String desiredlocation, DatePair date ){
         Reservation res=new Reservation(aol);
-        Scanner keyboard = new Scanner(System.in);
-        res.confirmReservation( this.name, id , desiredlocation, date);
+        res.confirmReservation(this.name, id, desiredlocation, date);
         /* setup the reservation based on the customer's choice.
         need more details in reservation class.
         */
