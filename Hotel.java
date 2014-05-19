@@ -5,13 +5,15 @@
  */
 
 package hbs;
+
+import java.io.Serializable;
 import java.util.Scanner;
 
 /**
  *
  * @author Team Oscar
  */
-public class Hotel 
+public class Hotel implements Serializable
 {
     
     protected Room[][] Rooms;
