@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package hbs;
+package HBS;
 
 /**
  *
@@ -17,6 +17,7 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -43,12 +44,22 @@ public class HBS {
 		database.add(loc1);
 		database.add(loc2);
 		Reservation res = new Reservation(database);
-		res.SearchForLocation("Chicago");
+		//res.Search("Chicago", );
 		
 		DatePair dp1 = new DatePair(LocalDate.of(2015, Month.MAY, 6), LocalDate.of(2015, Month.MAY, 25));
-		res.SearchForDate(dp1);
-		
-		
+		res.Search("Chicago", dp1);
+                res.chooserooms(dp1);
+                System.out.print(h2.getRoom(1, 1).search(dp1));
+		/*System.out.println("Are you a new customer?");
+       Scanner keyboard = new Scanner(System.in);
+       if(keyboard.nextLine()=="Yes"){
+           System.out.println("Please enter your name:");
+           keyboard = new Scanner(System.in);
+           String Nustudent = keyboard.nextLine();
+           Customer customer = new Customer(Nustudent);
+       }
+       else()
+       */		
     }
     
     /**
