@@ -6,6 +6,7 @@
 
 package hbs;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
  * make sure there is no overlap
  * @author Shuo Zhang <shuozhang2014@u.northwestern.edu>
  */
-public class DateStruct {
+public class DateStruct implements Serializable {
 	private ArrayList<DatePair> ds;
 	
 	public DateStruct() { this.ds = new ArrayList<DatePair>(); }
