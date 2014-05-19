@@ -7,6 +7,7 @@
 package hbs;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -175,29 +176,19 @@ public class Hotel implements Serializable
         return this.HotelName;
     }
    
-	public Room[] getFreeRooms(DatePair dp)
+	public ArrayList<Room> getFreeRooms(DatePair dp, RoomType type)
     {
         //Room[] returnRoom = new Room[NumberofRooms];
-        int count=0;
+        ArrayList<Room> al = new ArrayList<Room>();
         for (int i = 0 ; i<this.floors;i++){
             for (int j = 0 ; j<this.RoomsperFloor; j++){
-                if (this.Rooms[i][j].search(dp) == RoomState.AVAILABLE){
-                    //returnRoom[count]=this.Rooms[i][j];
-                    count++;
+                if (this.Rooms[i][j].search(dp) == RoomState.AVAILABLE &&
+			this.Rooms[i][j].getType().equals(type)){
+			al.add(this.Rooms[i][j]);
                 }
             }
         }
-        Room[] returnRoom = new Room[count];
-        count=0;
-         for (int i = 0 ; i<this.floors;i++){
-            for (int j = 0 ; j<this.RoomsperFloor; j++){
-                if (this.Rooms[i][j].search(dp) == RoomState.AVAILABLE){
-                    returnRoom[count]=this.Rooms[i][j];
-                    count++;
-                }
-            }
-        }
-        return returnRoom;
+	return al;
     }
 
     

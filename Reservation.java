@@ -36,7 +36,9 @@ public class Reservation {
         
     }
     
-    public void SearchForLocation(String desiredLocation) {
+    
+    
+    public void Search(String desiredLocation, DatePair date) {
         for(int i=0; i<arrayOfLocations.size(); i++) {
             if((arrayOfLocations.get(i).getCity()).equals(desiredLocation)) {
                 location = arrayOfLocations.get(i);
@@ -48,20 +50,33 @@ public class Reservation {
             hotelOptions = hotelOptions + ", " + (hotelsInLocation.get(i)).getHotelName() ;
         }
         System.out.println(hotelOptions);
+	
+	
+	
+	
+	
+	
+	
+	/*
         System.out.println("Which Hotel do you want to reserve?");
         Scanner keyboard = new Scanner(System.in);
         String hotelName;
         hotelName = keyboard.nextLine();
-        for (int i = 1; i<hotelsInLocation.size(); i++) {
+        for (int i = 0; i<hotelsInLocation.size(); i++) {
             if(((hotelsInLocation.get(i)).getHotelName()).equals(hotelName))
                 chosenHotel = hotelsInLocation.get(i); 
         }
-    }
+	
     
-    public void SearchForDate(DatePair date){
-        chosenDate = date;
-		chosenHotel.getHotelName();
-		//chosenHotel.getFreeRooms(date);
+        
+	
+	chosenDate = date;
+	chosenHotel.getHotelName();
+	ArrayList<Room> SingleRooms = chosenHotel.getFreeRooms(date, RoomType.SINGLE);
+	ArrayList<Room> DoubleRooms = chosenHotel.getFreeRooms(date, RoomType.DOUBLE);
+	ArrayList<Room> JSRooms = chosenHotel.getFreeRooms(date, RoomType.JUNIORSUITE);
+	*/
+	
         //Room[] rooms = chosenHotel.getFreeRooms(date);
 		/*
         String roomOptions = "The following rooms are available : " + rooms[0].toString();
