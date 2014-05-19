@@ -11,13 +11,15 @@ package hbs;
  *
  * @author Team Oscar
  */
+ 
+ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class Room {
+public class Room implements Serializable;{
     
     protected int number;
     protected RoomType type;
