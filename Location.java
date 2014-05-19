@@ -31,7 +31,15 @@ public class Location implements Serializable {
         this.City = City;
     }
     
-    
+    /**
+     * Copy Constructor
+     * @param copyLocation 
+     * @author Naif Almakhdhub
+     */
+    public Location(Location copyLocation){
+        this.CityHotelDataBase = copyLocation.getCityHotelDataBase();
+        this.City = copyLocation.getCity();
+    }
     
     /**
      * Adds a hotel to the data base
@@ -62,34 +70,39 @@ public class Location implements Serializable {
     }
     
     /**
-     * Temporary method to check the code
+     * Method to return a specific hotel in Location given the hotel name.
      * @param HotelName
      * @return Hotel
      */
-    public Hotel getHotel(Hotel HotelName){
+    public Hotel getHotel(String HotelName){
+        
+        for(int i = 0; i<this.CityHotelDataBase.size();i++){
             
-            if(CityHotelDataBase.indexOf(HotelName)!= -1){      // This condition because the function will return -1 if the hotels does not exist
-                int DesiredHotel = CityHotelDataBase.indexOf(HotelName);
-                return this.CityHotelDataBase.get(DesiredHotel);
+            if(this.CityHotelDataBase.get(i).getHotelName().equals(HotelName)){
+                return this.CityHotelDataBase.get(i);
+                
             }
+        }
         
         return null;
     }
     
     /**
-     * Observer of the state of a specific room in a desired hotel at a certain location
+     * Observer of the room state
      * @param hotel
      * @param floor
      * @param RoomNumber
-     * @return State of the room
-     * @author Naif Almakhdhub
+     * @param dp
+     * @return 
      */
-    public RoomState getHotelRoomState(Hotel hotel, int floor, int RoomNumber){
+    public RoomState getHotelRoomState(String hotel, int floor, int RoomNumber, DatePair dp){
         
-        return this.getHotel(hotel).getRoomState(floor, RoomNumber);
+        return this.getHotel(hotel).getRoom(floor, RoomNumber).search(dp);
         
     }
     
     
     
 }
+
+
