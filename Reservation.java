@@ -33,6 +33,7 @@ public class Reservation {
         idNumber = 0;
         TotalCost=0;
         isCancelled = false;
+        chosenDate=null;
         
     }
     
@@ -59,14 +60,14 @@ public class Reservation {
     }
     
     public void SearchForDate(Hotel hotel, DatePair date){
-        chosenDate = date;
+        chosenDate=date;
         Room[] rooms = hotel.getFreeRoom(date);
         String roomOptions = "The following rooms are available : " + rooms[0].toString();
         for (int i = 1; i<rooms.length; i++) {
             roomOptions = roomOptions + ", " + rooms[i].toString() ;
         }
         System.out.println(roomOptions);
-        System.out.println("Enter the room numbers for each room you want to reserve seperated by commas:");
+        System.out.println("Which room do you want to reserve?");
         Scanner keyboard = new Scanner(System.in);
         int j=0;
         while (keyboard.hasNextInt()){
@@ -80,8 +81,8 @@ public class Reservation {
             }
         }
         for(int i=0; i<j; i++)
-        chosenRoom[i].setState(RoomState.BOOKED);
-    } 
+            chosenRoom[i].insert(chosenDate);
+    }
     
     public void CalculateCost(Room[] rooms){
         for(int i=0; i<rooms.length; i++){
@@ -101,7 +102,7 @@ public class Reservation {
     public void cancelReservation() {
         isCancelled = false;
         for(int i=0; i<chosenRoom.length; i++)
-            chosenRoom[i].setState(RoomState.AVAILABLE);
+            chosenRoom[i].cancel(this.chosendate);
     }
     
     public String getUser() {
