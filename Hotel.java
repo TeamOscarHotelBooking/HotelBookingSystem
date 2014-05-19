@@ -185,6 +185,20 @@ public class Hotel implements Serializable
     {
         return this.Rooms[floor-1][roomNum - 1];
     }
+    
+    public Room[] getFreeRooms(DatePair dp)
+    {
+        Room[] returnRoom = new Room[];
+        int count=0;
+        for (int i = 0 ; i<this.floors;i++){
+            for (int j = 0 ; j<this.RoomsperFloor; j++){
+                if (this.Rooms[i][j].search(dp) == AVAILABLE){
+                    returnRoom[count]=this.Rooms[i][j];
+                    count++;
+                }
+            }
+        }
+    }
 
 //    public Room getRoom(int roomNumber)
 //    {
