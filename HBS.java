@@ -43,4 +43,45 @@ public class HBS {
         
     }
     
+    /**
+     * Method to write the Data Base to a file
+     * @param FileName
+     * @param DataBase 
+     * @author Naif Almakhdhub
+     */
+    public static  void writeDataBase(String FileName, ArrayList<Location> DataBase){
+        
+        try {
+            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(FileName));
+            output.writeObject(DataBase);
+            output.close();
+        } catch (IOException ex) {
+            Logger.getLogger(HBS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
+    /**
+     * Method to read the Data Base of from the file
+     * @param FileName
+     * @return Data Base
+     * @author Naif Almakhdhub
+     */
+    public static ArrayList<Location> readDataBase(String FileName){
+         ArrayList<Location> DataBase =null;
+        try {
+            ObjectInputStream input = new ObjectInputStream (new FileInputStream(FileName));
+            DataBase = (ArrayList<Location>) input.readObject();
+            input.close();
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(HBS.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(HBS.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(HBS.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return DataBase;
+    }
 }
