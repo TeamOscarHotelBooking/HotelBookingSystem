@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class Room implements Serializable;{
+public class Room implements Serializable{
     
     protected int number;
     protected RoomType type;
