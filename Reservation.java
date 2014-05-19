@@ -73,7 +73,7 @@ public class Reservation {
         }        
     }
     
-    public void chooserooms(DatePair date){
+    public void ChooseRooms(DatePair date){
         chosenDate = date;
         chosenHotel.getHotelName();
         ArrayList<Room> SingleRooms = chosenHotel.getFreeRooms(date, RoomType.SINGLE);
@@ -116,7 +116,7 @@ public class Reservation {
         user=name;
         idNumber=ID;
         this.Search(desiredLocation, date);
-       // this.SearchForDate(date);
+        this.ChooseRooms(date);
         this.CalculateCost(chosenRoom);
         // Add the confiremed reservation to the arraylist of reservation generated in Main function
     }
