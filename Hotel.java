@@ -192,7 +192,7 @@ public class Hotel implements Serializable
         int count=0;
         for (int i = 0 ; i<this.floors;i++){
             for (int j = 0 ; j<this.RoomsperFloor; j++){
-                if (this.Rooms[i][j].search(dp) == AVAILABLE){
+                if (this.Rooms[i][j].search(dp) == RoomState.AVAILABLE){
                     //returnRoom[count]=this.Rooms[i][j];
                     count++;
                 }
@@ -202,12 +202,13 @@ public class Hotel implements Serializable
         count=0;
          for (int i = 0 ; i<this.floors;i++){
             for (int j = 0 ; j<this.RoomsperFloor; j++){
-                if (this.Rooms[i][j].search(dp) == AVAILABLE){
+                if (this.Rooms[i][j].search(dp) == RoomState.AVAILABLE){
                     returnRoom[count]=this.Rooms[i][j];
                     count++;
                 }
             }
         }
+        return returnRoom;
     }
 
 //    public Room getRoom(int roomNumber)
