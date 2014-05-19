@@ -48,7 +48,7 @@ public class HBS {
 		
 		DatePair dp1 = new DatePair(LocalDate.of(2015, Month.MAY, 6), LocalDate.of(2015, Month.MAY, 25));
 		res.Search("Chicago", dp1);
-                res.chooserooms(dp1);
+                res.ChooseRooms(dp1);
                 System.out.print(h2.getRoom(1, 1).search(dp1));
 		/*System.out.println("Are you a new customer?");
        Scanner keyboard = new Scanner(System.in);
