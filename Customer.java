@@ -60,7 +60,12 @@ public class Customer implements User {
         */
         reservation.add(res); // add the new reservation to the list.
     }
-    
+    public Reservation getMostRecentReservation(){
+        int size=this.reservation.size();
+        if(size>0)
+            return this.reservation.get(size-1);
+        else return null;
+    }
     @Override
     // cancel a reservation  
     public void cancel(int id){
