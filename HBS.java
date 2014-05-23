@@ -49,17 +49,18 @@ public class HBS {
 		DatePair dp1 = new DatePair(LocalDate.of(2015, Month.MAY, 6), LocalDate.of(2015, Month.MAY, 25));
 		res.Search("Chicago", dp1);
                 res.ChooseRooms(dp1);
-                System.out.print(h2.getRoom(1, 1).search(dp1));
-		/*System.out.println("Are you a new customer?");
-       Scanner keyboard = new Scanner(System.in);
-       if(keyboard.nextLine()=="Yes"){
-           System.out.println("Please enter your name:");
-           keyboard = new Scanner(System.in);
-           String Nustudent = keyboard.nextLine();
-           Customer customer = new Customer(Nustudent);
-       }
-       else()
-       */		
+                System.out.print(h2.getRoom(1, 1).search(dp1)+"\n");
+                Customer c1 = new Customer("Nu");
+                c1.setpassword("0000000");
+                System.out.println("Enter your password:");
+                Scanner keyboard = new Scanner(System.in);
+                if (keyboard.nextLine().equals(c1.getpassword())){
+                    c1.reserve(database, 0000001, "Chicago", dp1);
+                    reservationDatabase.add(c1.getMostRecentReservation());
+                }
+                c1.showreservation();
+                c1.cancel(0000001);
+                c1.showreservation();		
     }
     
     /**
