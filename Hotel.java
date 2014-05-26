@@ -17,21 +17,24 @@ import java.util.Scanner;
 public class Hotel implements Serializable
 {
     
-    protected Room[][] Rooms;
-    protected int floors;
-    protected String HotelName;
-    protected int NumberofRooms;
-    protected int numSinglesperFloor;
-    protected int numDoublesperFloor;
-    protected int numSuitesperFloor;
-    protected int NumberofRoomsSingle;
-    protected int NumberofRoomsDouble;
-    protected int NumberofRoomsSuites;
-    protected double singlePrice;
-    protected double doublePrice;
-    protected double suitePrice;
-    protected String location;
-    protected int RoomsperFloor;
+    private Room[][] Rooms;
+    private int floors;
+    private String HotelName;
+    private int NumberofRooms;
+    private int numSinglesperFloor;
+    private int numDoublesperFloor;
+    private int numSuitesperFloor;
+    private int NumberofRoomsSingle;
+    private int NumberofRoomsDouble;
+    private int NumberofRoomsSuites;
+    private double singlePrice;
+    private double doublePrice;
+    private double suitePrice;
+    private String location;
+    private int RoomsperFloor;
+    private static RuntimeException invalidRoomNumberException = new RuntimeException("Invalid number of rooms");
+    private static RuntimeException invalidPriceException = new RuntimeException("Invalid price figure");
+    
     
     /**
      * Hotel Constructor 
@@ -52,6 +55,12 @@ public class Hotel implements Serializable
     public Hotel(String HotelName, int numSinglesperFloor, int numDoublesperFloor, int numSuitesperFloor, double singlePrice, double doublePrice, 
             double suitePrice, int floors, String location)
     {
+        if (numSinglesperFloor < 0 | numDoublesperFloor < 0 | numSuitesperFloor < 0 | floors < 0) {
+            throw invalidRoomNumberException;
+        }
+        if (singlePrice < 0 | doublePrice < 0 | suitePrice < 0) {
+            throw invalidPriceException;
+        }
         this.HotelName = HotelName;
         this.numSinglesperFloor = numSinglesperFloor;
         this.numDoublesperFloor = numDoublesperFloor;
@@ -65,6 +74,7 @@ public class Hotel implements Serializable
         this.floors = floors;
         this.location = location;
         this.RoomsperFloor = numSinglesperFloor + numDoublesperFloor + numSuitesperFloor;
+        this.numberOfRooms = floors * this.RoomsperFloor;
         
         this.Rooms = new Room[floors][RoomsperFloor];
         
@@ -94,7 +104,12 @@ public class Hotel implements Serializable
     
     public Hotel(String HotelName, int NumberofRooms, int floors, RoomType type, double price, String location)
     {
-        
+        if (numSinglesperFloor < 0 | numDoublesperFloor < 0 | numSuitesperFloor < 0 | floors < 0) {
+            throw invalidRoomNumberException;
+        }
+        if (singlePrice < 0 | doublePrice < 0 | suitePrice < 0) {
+            throw invalidPriceException;
+        }
         this.HotelName = HotelName;
         int roomsPerFloor = NumberofRooms / floors;
         this.NumberofRooms = NumberofRooms;
@@ -117,6 +132,12 @@ public class Hotel implements Serializable
     
     public Hotel(String HotelName, int NumberofRooms, int floors, String location)
     {
+        if (numSinglesperFloor < 0 | numDoublesperFloor < 0 | numSuitesperFloor < 0 | floors < 0) {
+            throw invalidRoomNumberException;
+        }
+        if (singlePrice < 0 | doublePrice < 0 | suitePrice < 0) {
+            throw invalidPriceException;
+        }
         System.out.println("Please input how many of the rooms you would like to be singles...");
         Scanner single = new Scanner(System.in);
         int numSingles = single.nextInt();
