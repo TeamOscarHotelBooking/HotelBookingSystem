@@ -41,6 +41,7 @@ public class HBS {
 		loc2.AddHoteltoDataBase(h3);
 		loc2.AddHoteltoDataBase(h4);
 		ArrayList<Location> database = new ArrayList<Location>();
+		ArrayList<Reservation> reservationDatabase= new ArrayList<Reservation>();
 		database.add(loc1);
 		database.add(loc2);
 		Reservation res = new Reservation(database);
