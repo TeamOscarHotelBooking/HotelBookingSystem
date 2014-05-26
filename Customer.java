@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package HBS;
+package hbs;
 import java.util.ArrayList;
 /**
  *
