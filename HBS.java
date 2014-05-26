@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package HBS;
+package hbs;
 
 /**
  *
@@ -29,7 +29,7 @@ public class HBS {
    
     
     public static void main(String[] args) {
-		
+
 		Hotel h1 = new Hotel("h1", 10, 20, 30, 100, 200, 300, 3, "Chicago");
 		Hotel h2 = new Hotel("h2", 10, 20, 30, 100, 200, 300, 3, "Chicago");
 		Hotel h3 = new Hotel("h3", 10, 20, 30, 100, 200, 300, 3, "Evanston");
@@ -44,10 +44,35 @@ public class HBS {
 		ArrayList<Reservation> reservationDatabase= new ArrayList<Reservation>();
 		database.add(loc1);
 		database.add(loc2);
-		Reservation res = new Reservation(database);
-		//res.Search("Chicago", );
 		
-		DatePair dp1 = new DatePair(LocalDate.of(2015, Month.MAY, 6), LocalDate.of(2015, Month.MAY, 25));
+                //Reservation res = new Reservation(database);
+                System.out.println("Enter your name");
+                Scanner keyboard = new Scanner(System.in);
+                String userName = keyboard.nextLine();
+                Customer cus = new Customer(userName);
+                cus.setpassword("000");
+                        
+                String quit = "";
+                while(!(quit.equals("quit"))) {
+                    System.out.println("Choose Chicago or Evanston");
+                    String userLoc = keyboard.nextLine();
+                    DatePair dp1 = new DatePair(LocalDate.of(2015, Month.MAY, 6), LocalDate.of(2015, Month.MAY, 25));
+                    cus.reserve(database, 11, userLoc, dp1);
+                    cus.showreservation();
+                    System.out.println("Do you want to cancel a reservation?");
+                    String cancelRes = keyboard.nextLine();
+                    if(cancelRes.equals("yes")) {
+                        System.out.println("Enter the id number of the reservation you want to cancel or type 'no'");
+                    
+                        int identification = keyboard.nextInt();
+                        cus.cancel(identification);
+                    }
+                    System.out.println("Enter 'quit' to quit");
+                    quit = keyboard.nextLine();
+                }
+		//res.Search("Chicago", );
+
+		/*DatePair dp1 = new DatePair(LocalDate.of(2015, Month.MAY, 6), LocalDate.of(2015, Month.MAY, 25));
 		res.Search("Chicago", dp1);
                 res.ChooseRooms(dp1);
                 System.out.print(h2.getRoom(1, 1).search(dp1)+"\n");
@@ -61,7 +86,7 @@ public class HBS {
                 }
                 c1.showreservation();
                 c1.cancel(0000001);
-                c1.showreservation();		
+                c1.showreservation();	*/	
     }
     
     /**
@@ -105,5 +130,5 @@ public class HBS {
         
         return DataBase;
     }
-	
+
 }
