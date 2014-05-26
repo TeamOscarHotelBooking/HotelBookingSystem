@@ -55,10 +55,10 @@ public class Hotel implements Serializable
     public Hotel(String HotelName, int numSinglesperFloor, int numDoublesperFloor, int numSuitesperFloor, double singlePrice, double doublePrice, 
             double suitePrice, int floors, String location)
     {
-        if (numSinglesperFloor < 0 | numDoublesperFloor < 0 | numSuitesperFloor < 0 | floors < 0) {
+        if (numSinglesperFloor < 0 || numDoublesperFloor < 0 || numSuitesperFloor < 0 || floors < 0) {
             throw invalidRoomNumberException;
         }
-        if (singlePrice < 0 | doublePrice < 0 | suitePrice < 0) {
+        if (singlePrice < 0 || doublePrice < 0 || suitePrice < 0) {
             throw invalidPriceException;
         }
         this.HotelName = HotelName;
@@ -104,10 +104,10 @@ public class Hotel implements Serializable
     
     public Hotel(String HotelName, int NumberofRooms, int floors, RoomType type, double price, String location)
     {
-        if (numSinglesperFloor < 0 | numDoublesperFloor < 0 | numSuitesperFloor < 0 | floors < 0) {
+        if (NumberofRooms < 0 || floors < 0) {
             throw invalidRoomNumberException;
         }
-        if (singlePrice < 0 | doublePrice < 0 | suitePrice < 0) {
+        if (price < 0) {
             throw invalidPriceException;
         }
         this.HotelName = HotelName;
@@ -132,12 +132,10 @@ public class Hotel implements Serializable
     
     public Hotel(String HotelName, int NumberofRooms, int floors, String location)
     {
-        if (numSinglesperFloor < 0 | numDoublesperFloor < 0 | numSuitesperFloor < 0 | floors < 0) {
+        if (NumberofRooms < 0 || floors < 0) {
             throw invalidRoomNumberException;
         }
-        if (singlePrice < 0 | doublePrice < 0 | suitePrice < 0) {
-            throw invalidPriceException;
-        }
+        
         System.out.println("Please input how many of the rooms you would like to be singles...");
         Scanner single = new Scanner(System.in);
         int numSingles = single.nextInt();
