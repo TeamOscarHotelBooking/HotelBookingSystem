@@ -9,7 +9,7 @@ package hbs;
 import java.time.LocalDate;
 
 /**
- *
+ * DatePair represent one single period of time the room is booked
  * @author Shuo Zhang <shuozhang2014@u.northwestern.edu>
  */
 public class DatePair {
@@ -18,6 +18,11 @@ public class DatePair {
 	private LocalDate checkOutDate;
 	// may include a field to represent personal info
 
+	/**
+	 * DatePair explicit constructor
+	 * @param checkInDate the LocalDate represent the check-in date
+	 * @param checkOutDate the LocalDate represent the check-out date
+	 */
 	public DatePair(LocalDate checkInDate, LocalDate checkOutDate) {
 		// check checkInDate is before checkOutDate
 		if (!(checkInDate.isBefore(checkOutDate))) {
@@ -31,7 +36,15 @@ public class DatePair {
 		this.checkOutDate = checkOutDate;
 	}
 
+  /**
+   * get the check-in date
+   * @return the check-in Date
+   */
   public LocalDate getCheckInDate() { return checkInDate; }
+  /**
+   * get the check-out date
+   * @return the check-in Date
+   */
   public LocalDate getCheckOutDate() { return checkOutDate; }
 
   @Override
@@ -45,10 +58,12 @@ public class DatePair {
     return this.checkInDate.equals(pairo.getCheckInDate()) &&
            this.checkOutDate.equals(pairo.getCheckOutDate());
   }
+  /*
   public static void main (String[] args) {
 	  LocalDate ld = LocalDate.now();
 	  System.out.println(ld.getYear());
 	  System.out.println(ld.getMonth());
   }
+  */
 
 }

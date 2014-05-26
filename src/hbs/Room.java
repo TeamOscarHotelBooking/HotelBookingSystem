@@ -38,6 +38,13 @@ public class Room {
     }
 	* */
 
+	/**
+	 * Room's default ctor
+	 * @param number room number
+	 * @param type room type
+	 * @param price room price
+	 * @param floorNum floor number
+	 */
     public Room (int number, RoomType type, double price, int floorNum){
 		// no Date parameter, since we always want to start with no reservation
 		this.number = number;
@@ -49,7 +56,7 @@ public class Room {
     
     /**
      * Room Type Transformer
-     * @param type 
+     * @param type the type you want to set to
      */
     public void setType(RoomType type){
         this.type = type;
@@ -57,7 +64,7 @@ public class Room {
     
     /** 
      * Room Price Transformer
-     * @param price 
+     * @param price the price you want to set to
      */
     public void setPrice(double price){
         this.price = price;
@@ -65,24 +72,31 @@ public class Room {
     
     
     /**
-     * Room Type observer
-     * @return type
+     * room type getter
+     * @return the room type
      */
     public RoomType getType(){
         return this.type;
     }
     
+    /**
+     * room number getter
+     * @return the room number
+     */
 	public int getNumber() {
 		return this.number;
 	}
-	
+	/**
+	 * floor number getter
+	 * @return floor number of this room
+	 */
 	public int getFloorNumber() {
 		return this.floorNum;
 	}
 			
     /**
      * Room Price Observer
-     * @return price
+     * @return price of the room
      */
     public double getPrice(){
        return this.price;
@@ -91,7 +105,7 @@ public class Room {
     /**
      * Function to make a discount on a room (in case of a special offer)
      * Will change the original price to new discounted one
-     * @param DiscountPercentage 
+     * @param DiscountPercentage the percentage discount rate
      */
     public void DiscountPrice(double DiscountPercentage){
         if (DiscountPercentage <1 && DiscountPercentage > 0){
@@ -101,33 +115,40 @@ public class Room {
             System.out.println("Non authorized Discount");
         }
     }
-	
+	/**
+	 * output the Dates
+	 */
 	public void printDates() {
 		System.out.println(this.Date.toString());
 	}
 	
 	/**
-	 * 
-	 * @param dp
-	 * @return 
+	 * search whether the DatePair is booked
+	 * @param dp DatePair u want to search
+	 * @return RoomState of the DatePair
 	 */ 
 	public RoomState search(DatePair dp) {
 		return Date.search(dp);
 	}
 	
 	/**
+	 * cancel the DatePair if booked
 	 * return 0 for success, return -1 for failure
-	 * @param dp 
+	 * @param dp DatePair u want to cancel
 	 */
 	public int cancel(DatePair dp) {
 		return Date.cancel(dp);
 	}
 	
+	/**
+	 * insert the DatePair u wanted to book
+	 * @param dp DatePair u want to insert
+	 */
 	public void insert(DatePair dp) {
 		this.Date.insert(dp);
 		//System.out.println(this.Date.toString());
 	}
-	
+	/*
 	public static void main (String [] args) {
 		Room rm = new Room(204, RoomType.DOUBLE, 125.99, 100);
 		DatePair dp1 = new DatePair(LocalDate.of(2015, Month.MAY, 6), LocalDate.of(2015, Month.MAY, 25));
@@ -160,7 +181,7 @@ public class Room {
 		
 		//test-cases
 		//invalid DatePair construction
-		/*
+		
 		try {
 			DatePair dp3 = new DatePair(LocalDate.of(2015, Month.JULY, 16), LocalDate.of(2013, Month.JULY, 10));
 		} catch (UnsupportedOperationException e) {
@@ -190,6 +211,7 @@ public class Room {
 		} catch (UnsupportedOperationException e) {
 			System.out.println("exception: overlap case 2");
 		}
-				*/
+				
 	}
+	*/
 }

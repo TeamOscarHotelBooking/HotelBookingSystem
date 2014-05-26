@@ -11,26 +11,29 @@ import java.time.Month;
 import java.util.ArrayList;
 
 /**
- * has to be maintained sorted
- * make sure there is no overlap
+ * DateStruct contains an array of DatePair representing all booked periods
+ * has to be maintained sorted, make sure there is no overlap
  * @author Shuo Zhang <shuozhang2014@u.northwestern.edu>
  */
 public class DateStruct {
 	private ArrayList<DatePair> ds;
 	
+	/**
+	 * DateStruct default c'tor
+	 */
 	public DateStruct() { this.ds = new ArrayList<DatePair>(); }
 	
 	/**
 	 * not gonna use this constructor
 	 * if use, has to check no-overlap and sorted before use
-	 * @param ds 
+	 * @param ds an ArrayList of DatePair
 	 */
 	public DateStruct(ArrayList<DatePair> ds) {	this.ds = ds; }
 	
 	/**
-	 * return 0 for success, return -1 for failure
-	 * @param dp
-	 * @return 
+	 * cancel the a period of specific DatePair
+	 * @param dp user-specified DatePair
+	 * @return return 0 for success, return -1 for failure
 	 */
 	public int cancel(DatePair dp) {
 		int ret = -1;
@@ -45,8 +48,8 @@ public class DateStruct {
 	
 	/**
 	 * does both throw exception and return BOOKED/AVAILABLE
-	 * @param dp
-	 * @return 
+	 * @param dp the DatePair u want to search
+	 * @return the RoomState of that DatePair
 	 */
 	public RoomState search(DatePair dp) {
 		
@@ -89,9 +92,8 @@ public class DateStruct {
 	}
 	
 	/**
-	 * need to check return value
-	 * Or we can do this by throw an exception
-	 * @param dp
+	 * insert a DatePair
+	 * @param dp the DatePair u want to insert
 	 * @return 0 when success, -1 when failed
 	 */
 	public void insert(DatePair dp) {
@@ -136,7 +138,10 @@ public class DateStruct {
 		// and make sure no overlap
 		// need a boolean method to check this first
 	}
-	
+	/**
+	 * toString method to format the output
+	 * @return a formatted string showing all the booked period 
+	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		for (DatePair dp : ds) {
@@ -160,6 +165,7 @@ public class DateStruct {
 		return sb.toString();
 	}
 	
+	/*
 	public static void main (String[] args) {
 		ArrayList<DatePair> list = new ArrayList<DatePair>();
 		DatePair dp1 = new DatePair(LocalDate.now(), LocalDate.of(2014, Month.MAY, 25));
@@ -169,4 +175,5 @@ public class DateStruct {
 		DateStruct ds = new DateStruct(list);
 		System.out.println(ds.toString());
 	}
+	*/
 }

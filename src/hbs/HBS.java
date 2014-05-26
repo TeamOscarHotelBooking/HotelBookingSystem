@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package HBS;
+package hbs;
 
 /**
  *
@@ -29,7 +29,7 @@ public class HBS {
    
     
     public static void main(String[] args) {
-		
+
 		Hotel h1 = new Hotel("h1", 10, 20, 30, 100, 200, 300, 3, "Chicago");
 		Hotel h2 = new Hotel("h2", 10, 20, 30, 100, 200, 300, 3, "Chicago");
 		Hotel h3 = new Hotel("h3", 10, 20, 30, 100, 200, 300, 3, "Evanston");
@@ -46,7 +46,7 @@ public class HBS {
 		database.add(loc2);
 		Reservation res = new Reservation(database);
 		//res.Search("Chicago", );
-		
+
 		DatePair dp1 = new DatePair(LocalDate.of(2015, Month.MAY, 6), LocalDate.of(2015, Month.MAY, 25));
 		res.Search("Chicago", dp1);
                 res.ChooseRooms(dp1);
@@ -105,5 +105,5 @@ public class HBS {
         
         return DataBase;
     }
-	
+
 }

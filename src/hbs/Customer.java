@@ -39,6 +39,10 @@ public class Customer implements User {
         this.name=name;
         this.password="0123456789";
     }
+    public Customer(String name, String password){
+        this.name=name;
+        this.password=password;
+    }
     public void setpassword(String password){
         this.password=password;
     }
