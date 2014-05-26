@@ -5,6 +5,10 @@
  */
 
 package hbs;
+import hbs.DatePair;
+import hbs.Location;
+import hbs.Reservation;
+import hbs.User;
 import java.util.ArrayList;
 /**
  *
@@ -29,17 +33,17 @@ public class Customer implements User {
     private ArrayList<Reservation> reservation;
     private int creditcard;
     
+    private static RuntimeException invalidReservationIDException = new RuntimeException("Invalid ID Number: Reservation ID needs to be a positive integer");
+    
     //default constructor
     public Customer(){
         this.name=null;
         this.password="0123456789";
-        reservation= new ArrayList<>();
     }
     // constructor a customer using name
     public Customer(String name){
         this.name=name;
         this.password="0123456789";
-        reservation= new ArrayList<>();
     }
     public void setpassword(String password){
         this.password=password;
@@ -57,6 +61,9 @@ public class Customer implements User {
     public void reserve(ArrayList<Location> aol,int id,String desiredlocation, DatePair date ){
         Reservation res=new Reservation(aol);
         res.confirmReservation(this.name, id, desiredlocation, date);
+        /* setup the reservation based on the customer's choice.
+        need more details in reservation class.
+        */
         reservation.add(res); // add the new reservation to the list.
     }
     public Reservation getMostRecentReservation(){
@@ -65,11 +72,15 @@ public class Customer implements User {
             return this.reservation.get(size-1);
         else return null;
     }
-    
     @Override
     // cancel a reservation  
     public void cancel(int id){
       //  Reservation res = new Reservation();
+        if (id < 0 || id != (int) id)
+        {
+            throw invalidReservationIDException;
+        }
+        
         boolean state=true;
         for (int i=0; i<this.reservation.size();i++){
            if( reservation.get(i).getIDNumber()==id){
@@ -86,12 +97,9 @@ public class Customer implements User {
     public void showreservation(){
        int size=reservation.size();
        String output="All the reservation info:";
-       if(size>=1){
-            for (int i=0; i<size; i++){
-                output=output+reservation.get(i).toString(); // need a toString method in reservation class.
-            }
+       for (int i=0; i<size; i++){
+           output=output+reservation.get(i).toString(); // need a toString method in reservation class.
        }
-       else output="No reservations.";
        System.out.println(output);
     }
     
