@@ -45,6 +45,9 @@ public class Customer implements User {
         this.name=name;
         this.password="0123456789";
     }
+    public String getName() {
+        return this.name;
+    }
     public void setpassword(String password){
         this.password=password;
     }
@@ -96,9 +99,9 @@ public class Customer implements User {
     @Override
     public void showreservation(){
        int size=reservation.size();
-       String output="All the reservation info:";
+       String output="Reservation info:";
        for (int i=0; i<size; i++){
-           output=output+reservation.get(i).toString(); // need a toString method in reservation class.
+           output=output+"\n" + reservation.get(i).toString(); // need a toString method in reservation class.
        }
        System.out.println(output);
     }

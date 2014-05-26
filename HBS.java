@@ -28,6 +28,9 @@ public class HBS {
      */
    
     
+    private static RuntimeException invalidUserNameException = new RuntimeException("That user name is not in our database");
+    private static RuntimeException invalidPasswordException = new RuntimeException("Incorrect password");
+    
     public static void main(String[] args) {
 
 		Hotel h1 = new Hotel("h1", 10, 20, 30, 100, 200, 300, 3, "Chicago");
@@ -44,28 +47,58 @@ public class HBS {
 		ArrayList<Reservation> reservationDatabase= new ArrayList<Reservation>();
 		database.add(loc1);
 		database.add(loc2);
-		
-                //Reservation res = new Reservation(database);
-                System.out.println("Enter your name");
-                Scanner keyboard = new Scanner(System.in);
-                String userName = keyboard.nextLine();
-                Customer cus = new Customer(userName);
-                cus.setpassword("000");
-                        
+                
+                ArrayList<Customer> customerList = new ArrayList<Customer>();
                 String quit = "";
-                while(!(quit.equals("quit"))) {
-                    System.out.println("Choose Chicago or Evanston");
-                    String userLoc = keyboard.nextLine();
-                    DatePair dp1 = new DatePair(LocalDate.of(2015, Month.MAY, 6), LocalDate.of(2015, Month.MAY, 25));
-                    cus.reserve(database, 11, userLoc, dp1);
-                    cus.showreservation();
-                    System.out.println("Do you want to cancel a reservation?");
-                    String cancelRes = keyboard.nextLine();
-                    if(cancelRes.equals("yes")) {
-                        System.out.println("Enter the id number of the reservation you want to cancel or type 'no'");
-                    
-                        int identification = keyboard.nextInt();
-                        cus.cancel(identification);
+                
+		while(!(quit.equals("quit"))) {
+                    System.out.println("Are you a new user?");
+                    Scanner keyboard = new Scanner(System.in);
+                    String isNew = keyboard.nextLine();
+                    if(isNew.equals("yes")) {
+                        System.out.println("Enter your name");
+                        String userName = keyboard.nextLine();
+                        Customer customer = new Customer(userName);
+                        System.out.println("Enter a password");
+                        String userPass = keyboard.nextLine();
+                        customer.setpassword(userPass);
+                        customerList.add(customer);
+                    }
+                    System.out.println("Enter your name:");
+                    String nameOfUser = keyboard.nextLine();
+                    int index = -1;
+                    for (int i=0; i<customerList.size(); i++) {
+                        if(customerList.get(i).getName().equals(nameOfUser)) {
+                            index = i;
+                            break;
+                        }
+                    }
+                    if(index == -1) {
+                        throw invalidUserNameException;
+                    }
+
+                    System.out.println("Enter your password:");
+                    String passwordOfUser = keyboard.nextLine();
+                    if(!(passwordOfUser.equals(customerList.get(index).getpassword()))) {
+                        throw invalidPasswordException;
+                    }
+
+                    while(!(quit.equals("quit"))) {
+                        System.out.println("Choose Chicago or Evanston");
+                        String userLoc = keyboard.nextLine();
+                        DatePair dp1 = new DatePair(LocalDate.of(2015, Month.MAY, 6), LocalDate.of(2015, Month.MAY, 25));
+                        customerList.get(index).reserve(database, 11, userLoc, dp1);
+                        customerList.get(index).showreservation();
+                        System.out.println("Do you want to cancel a reservation?");
+                        String cancelRes = keyboard.nextLine();
+                        if(cancelRes.equals("yes")) {
+                            System.out.println("Enter the id number of the reservation you want to cancel or type 'no'");
+
+                            int identification = keyboard.nextInt();
+                            customerList.get(index).cancel(identification);
+                        }
+                        System.out.println("Enter 'quit' to end your session");
+                        quit = keyboard.nextLine();
                     }
                     System.out.println("Enter 'quit' to quit");
                     quit = keyboard.nextLine();
