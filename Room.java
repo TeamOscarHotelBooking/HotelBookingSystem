@@ -23,7 +23,10 @@ public class Room {
     private RoomType type;
     private double price;
     private DateStruct Date;
-	private int floorNum;
+    private int floorNum;
+    private static RuntimeException invalidRoomNumberException = new RuntimeException("Invalid Room Number: Must be greater than 0 and an integer");
+    private static RuntimeException invalidRoomPriceException = new RuntimeException("Invalid Room Price: Price must be greater than 0");
+    
     
     /**
      * Default Constructor
@@ -40,11 +43,21 @@ public class Room {
 
     public Room (int number, RoomType type, double price, int floorNum){
 		// no Date parameter, since we always want to start with no reservation
-		this.number = number;
-		this.type = type;
-		this.price = price;
-		this.Date =  new DateStruct();
-		this.floorNum = floorNum;
+	
+        if (number < 0 || floorNum < 0)
+        {
+            throw invalidRoomNumberException;
+        }
+        if (price < 0)
+        {
+            throw invalidRoomPriceException;
+        }
+        
+        this.number = number;
+	this.type = type;
+	this.price = price;
+        this.Date =  new DateStruct();
+	this.floorNum = floorNum;
     }
     
     /**
