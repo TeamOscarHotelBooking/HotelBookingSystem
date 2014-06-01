@@ -5,6 +5,8 @@
  */
 
 package hbs;
+import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 /**
  *
@@ -22,7 +24,7 @@ confirmreservation(Hotel, datepair);{
 }
 toString();     
 */
-public class Customer implements User { 
+public class Customer implements User, Serializable { 
    
     private String name;
     private String password;
@@ -39,9 +41,15 @@ public class Customer implements User {
         this.name=name;
         this.password="0123456789";
     }
+	/**
+	 * used in GUI
+	 * @param name the name of the customer
+	 * @param password the password of the customer
+	 */
     public Customer(String name, String password){
         this.name=name;
         this.password=password;
+		this.reservation = new ArrayList<Reservation>();
     }
     public void setpassword(String password){
         this.password=password;
@@ -64,6 +72,25 @@ public class Customer implements User {
         */
         reservation.add(res); // add the new reservation to the list.
     }
+	
+	/**
+	 * the parallel reserve method used in GUI
+	 * @param aol a list of locations
+	 * @param id the reservation ID
+	 * @param desiredlocation the name of the chosen location
+	 * @param date the date range wanted to reserve
+	 * @param hotelIndex the index of the chosen hotel
+	 * @param roomTypeIndex the index of chosen roomType
+	 * @param numRoomIndex they index of chosen number of rooms
+	 */
+	public void reserveGUI(ArrayList<Location> aol, int id, String desiredlocation, DatePair date,
+			int hotelIndex, int roomTypeIndex, int numRoomIndex){
+		
+        Reservation res = new Reservation(aol, LocalDate.now());
+        res.allInOne(this.name, id, desiredlocation, date, hotelIndex, roomTypeIndex, numRoomIndex);
+        reservation.add(res); 
+    }
+	
     public Reservation getMostRecentReservation(){
         int size=this.reservation.size();
         if(size>0)
@@ -96,5 +123,11 @@ public class Customer implements User {
        System.out.println(output);
     }
     
-    
+	/**
+	 * used in GUI
+	 * @return a list of all reservation of this customer
+	 */
+    public ArrayList<Reservation> getReservationList() {
+		return this.reservation;
+	}
 }

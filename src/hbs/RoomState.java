@@ -7,11 +7,9 @@
 package hbs;
 
 /**
- *
+ * The enumeration of all possible room states
  * @author Team Oscar
  */
 public enum  RoomState {
-//comm
-
     BOOKED, AVAILABLE
 }

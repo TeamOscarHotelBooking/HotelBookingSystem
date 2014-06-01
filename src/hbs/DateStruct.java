@@ -6,6 +6,7 @@
 
 package hbs;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -15,11 +16,11 @@ import java.util.ArrayList;
  * has to be maintained sorted, make sure there is no overlap
  * @author Shuo Zhang <shuozhang2014@u.northwestern.edu>
  */
-public class DateStruct {
+public class DateStruct implements Serializable {
 	private ArrayList<DatePair> ds;
 	
 	/**
-	 * DateStruct default c'tor
+	 * DateStruct default constructor
 	 */
 	public DateStruct() { this.ds = new ArrayList<DatePair>(); }
 	
@@ -59,11 +60,9 @@ public class DateStruct {
 		if (!(attemptCheckInDate.isEqual(LocalDate.now()) || 
 				attemptCheckInDate.isAfter(LocalDate.now()))) {
 			throw new UnsupportedOperationException("invalid DatePair0");
-			//here throw exception makes more sense
 		}
 		
 		if (ds.size() == 0) {
-			//ds.add(dp);
 			return RoomState.AVAILABLE;
 		}
 		
@@ -72,22 +71,18 @@ public class DateStruct {
 			LocalDate currentCheckOutDate = ds.get(i).getCheckOutDate();
 			if (attemptCheckOutDate.isBefore(currentCheckInDate) || 
 				attemptCheckOutDate.isEqual(currentCheckInDate)) {
-				//ds.add(i, dp);
 				return RoomState.AVAILABLE;
 			}
 			else if (attemptCheckOutDate.isAfter(currentCheckInDate) && 
 					(attemptCheckOutDate.isBefore(currentCheckOutDate) ||
 					attemptCheckOutDate.isEqual(currentCheckOutDate))) {
-				//throw new UnsupportedOperationException("invalid DatePair1");
 				return RoomState.BOOKED;
 			}
 			else if ((attemptCheckOutDate.isAfter(currentCheckOutDate) &&
 					attemptCheckInDate.isBefore(currentCheckOutDate))) {
-				//throw new UnsupportedOperationException("invalid DatePair2");
 				return RoomState.BOOKED;
 			}
 		}
-		//ds.add(ds.size(), dp);
 		return RoomState.AVAILABLE;
 	}
 	
@@ -128,16 +123,12 @@ public class DateStruct {
 			}
 			else if ((attemptCheckOutDate.isAfter(currentCheckOutDate) &&
 					attemptCheckInDate.isBefore(currentCheckOutDate))) {
-				//System.exit(-1);
 				throw new UnsupportedOperationException("invalid DatePair2");
 			}
 		}
 		ds.add(ds.size(), dp);
-		
-		// has to do a search before insertion
-		// and make sure no overlap
-		// need a boolean method to check this first
 	}
+	
 	/**
 	 * toString method to format the output
 	 * @return a formatted string showing all the booked period 
@@ -164,16 +155,4 @@ public class DateStruct {
 		}
 		return sb.toString();
 	}
-	
-	/*
-	public static void main (String[] args) {
-		ArrayList<DatePair> list = new ArrayList<DatePair>();
-		DatePair dp1 = new DatePair(LocalDate.now(), LocalDate.of(2014, Month.MAY, 25));
-		DatePair dp2 = new DatePair(LocalDate.of(2014, Month.JUNE, 3), LocalDate.of(2014, Month.JULY, 10));
-		list.add(dp1);
-		list.add(dp2);
-		DateStruct ds = new DateStruct(list);
-		System.out.println(ds.toString());
-	}
-	*/
 }

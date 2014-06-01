@@ -109,15 +109,15 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="DayIn" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="MonthIn" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="YearIn" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -133,7 +133,7 @@
       <SubComponents>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="CheckIn Date"/>
+            <Property name="text" type="java.lang.String" value="CheckIn Date: day-month-year"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="DayIn">
@@ -177,7 +177,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">
           <Properties>
-            <Property name="text" type="java.lang.String" value="CheckOut Date"/>
+            <Property name="text" type="java.lang.String" value="CheckOut Date: day-month-year"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JComboBox" name="DayOut">
@@ -270,10 +270,13 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="MyReservation"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Reserve"/>
+        <Property name="text" type="java.lang.String" value="Next"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>

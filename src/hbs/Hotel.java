@@ -270,5 +270,29 @@ public class Hotel implements Serializable
             }
         }
     }
+	
+	/**
+	 * The getter method of the price of single room.
+	 * @return price of single
+	 */
+	public double getSinglePrice() {
+		return singlePrice;
+	}
+	
+	/**
+	 * The getter method of the price of double room.
+	 * @return price of double
+	 */
+	public double getDoublePrice() {
+		return doublePrice;
+	}
+	
+	/**
+	 * The getter method of the price of Suite room.
+	 * @return price of suite
+	 */
+	public double getSuitePrice() {
+		return suitePrice;
+	}
     
 }

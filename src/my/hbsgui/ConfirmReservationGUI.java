@@ -8,16 +8,20 @@ package my.hbsgui;
 
 import hbs.Customer;
 import hbs.DatePair;
+import static hbs.HBS.readReservatinID;
+import static hbs.HBS.writeReservationID;
+import hbs.Hotel;
 import hbs.Location;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- * Confirmed GUI to see reservation result and choose to jump to history GUI
+ * The GUI to confirm reservation
  * @author Shuo Zhang <shuozhang2014@u.northwestern.edu>
  */
-public class Confirmed extends javax.swing.JFrame {
-
+public class ConfirmReservationGUI extends javax.swing.JFrame {
+	private HotelTable prevRef;
+	
 	private ArrayList<Customer> customerList;
 	private ArrayList<Location> locationList;
 	private Customer cus;
@@ -27,23 +31,24 @@ public class Confirmed extends javax.swing.JFrame {
 	private int roomTypeIndex;
 	private int numRoomIndex;
 	
-	private LocalDate date;
+	private ArrayList<Hotel> hotelList;
     
 	/**
-	 * The constructor of Confirmed GUI
-	 * @param locationList a list of locations
-	 * @param customerList a list of customers
+	 * The constructor of ConfirmReservationGUI
+	 * @param locationList a list of location
+	 * @param customerList a list of customer
 	 * @param cus current customer
 	 * @param myCity location name
 	 * @param dp range of dates to book
 	 * @param hotelIndex index of selected hotel from GUI
 	 * @param roomTypeIndex index of selected roomType from GUI
 	 * @param numRoomIndex index of selected numRoom from GUI
+	 * @param prevRef reference to previous page
 	 */
-    public Confirmed(ArrayList<Location> locationList, 
+    public ConfirmReservationGUI(ArrayList<Location> locationList, 
 			ArrayList<Customer> customerList, Customer cus, String myCity, 
 			DatePair dp, int hotelIndex, int roomTypeIndex, 
-			int numRoomIndex) {
+			int numRoomIndex, HotelTable prevRef) {
 		
 		this.customerList = customerList;
 		this.locationList = locationList;
@@ -53,7 +58,8 @@ public class Confirmed extends javax.swing.JFrame {
 		this.hotelIndex = hotelIndex;
 		this.roomTypeIndex = roomTypeIndex;
 		this.numRoomIndex = numRoomIndex;
-		this.date = date;
+		
+		this.prevRef = prevRef;
 		
         initComponents();
 		
@@ -84,13 +90,12 @@ public class Confirmed extends javax.swing.JFrame {
 			default:
 				break;
 		}
-		
+				
 		jTextField1.setText(cus.showname());
 		jTextField2.setText(locationList.get(locationIndex).getCityHotelDataBase().get(hotelIndex).getHotelName());
 		jTextField3.setText(myCity);
-		jTextField4.setText("" + (numRoomIndex + 1));
-		jTextField6.setText("" + price);
-		
+		jTextField4.setText(Integer.toString(numRoomIndex + 1));
+		jTextField6.setText(Double.toString(price));
     }
 
     /**
@@ -102,6 +107,8 @@ public class Confirmed extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
@@ -115,9 +122,22 @@ public class Confirmed extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButton1.setText("Confirm");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Back");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Your Reservation", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("宋体", 0, 24))); // NOI18N
 
@@ -154,32 +174,35 @@ public class Confirmed extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel1)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel2)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel3)
                     .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField4))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel5)
                     .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(jLabel6)
                     .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jTextField1, jTextField2, jTextField3, jTextField4, jTextField5, jTextField6});
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
+                .addGap(12, 12, 12)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
@@ -187,7 +210,7 @@ public class Confirmed extends javax.swing.JFrame {
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -198,31 +221,31 @@ public class Confirmed extends javax.swing.JFrame {
                 .addContainerGap(39, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Check History");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {jTextField1, jTextField2, jTextField3, jTextField4, jTextField5, jTextField6});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton1)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(159, 159, 159)
+                .addComponent(jButton1)
+                .addGap(108, 108, 108)
+                .addComponent(jButton2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(62, 62, 62)
+                .addGap(52, 52, 52)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addGap(28, 28, 28)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addContainerGap(48, Short.MAX_VALUE))
         );
 
@@ -230,20 +253,41 @@ public class Confirmed extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 	/**
-	 * Jump to the check history window
+	 * Jump back to the previous page
+	 * @param evt click button
+	 */
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+		this.setVisible(false);
+		this.prevRef.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+	
+	/**
+	 * Confirm the reservation and jump to confirmed window to check history or quit
 	 * @param evt click button
 	 */
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+		int id = readReservatinID("idDB.dat").intValue();
+		++id;
+		writeReservationID("idDB.dat", new Integer(id));
+		
+		cus.reserveGUI(locationList, id, myCity, dp, hotelIndex, roomTypeIndex,
+				numRoomIndex);
+		
 		this.setVisible(false);
 		java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ShowHistory(locationList, customerList, cus).setVisible(true);
+                new Confirmed(locationList, 
+					customerList, cus, myCity, 
+					dp, hotelIndex, roomTypeIndex, 
+					numRoomIndex).setVisible(true);
             }
         });
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

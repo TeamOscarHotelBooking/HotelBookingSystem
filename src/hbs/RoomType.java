@@ -7,10 +7,10 @@
 package hbs;
 
 /**
- *
+ * the enumeration of all room types
  * @author Team Oscar
  */
-enum RoomType {
+public enum RoomType {
     SINGLE, DOUBLE, JUNIORSUITE
 }
     

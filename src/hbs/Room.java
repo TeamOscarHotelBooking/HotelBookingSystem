@@ -7,39 +7,27 @@
 
 package hbs;
 
-/**
- *
- * @author Team Oscar
- */
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-public class Room {
+/**
+ *
+ * @author Team Oscar
+ */
+public class Room implements Serializable{
     
     private int number;
     private RoomType type;
     private double price;
     private DateStruct Date;
 	private int floorNum;
-    
-    /**
-     * Default Constructor
-     * Numbers are random currently to ease the process for other methods in the project
-     
-    public Room(){
-		this.number = 1;
-		this.type = RoomType.SINGLE;
-		this.price = 100;
-		this.Date =  new DateStruct();
-		
-    }
-	* */
 
 	/**
-	 * Room's default ctor
+	 * Default constructor of Room
 	 * @param number room number
 	 * @param type room type
 	 * @param price room price
@@ -115,6 +103,7 @@ public class Room {
             System.out.println("Non authorized Discount");
         }
     }
+	
 	/**
 	 * output the Dates
 	 */
@@ -148,70 +137,4 @@ public class Room {
 		this.Date.insert(dp);
 		//System.out.println(this.Date.toString());
 	}
-	/*
-	public static void main (String [] args) {
-		Room rm = new Room(204, RoomType.DOUBLE, 125.99, 100);
-		DatePair dp1 = new DatePair(LocalDate.of(2015, Month.MAY, 6), LocalDate.of(2015, Month.MAY, 25));
-		DatePair dp2 = new DatePair(LocalDate.of(2015, Month.JUNE, 3), LocalDate.of(2015, Month.JULY, 10));
-		rm.insert(dp1);
-		rm.insert(dp2);
-		rm.printDates();
-		
-		//testcase for search
-		DatePair dp3 = new DatePair(LocalDate.of(2016, Month.JUNE, 3), LocalDate.of(2016, Month.JULY, 10));
-		try {
-			System.out.println(rm.search(dp1));
-		} catch (UnsupportedOperationException e) {
-			System.out.println("invalid DatePair0");
-		}
-		try {
-			System.out.println(rm.search(dp2));
-		} catch (UnsupportedOperationException e) {
-			System.out.println("invalid DatePair0");
-		}
-		try {
-			System.out.println(rm.search(dp3));
-		} catch (UnsupportedOperationException e) {
-			System.out.println("invalid DatePair0");
-		}
-		
-		//testcases for cancel
-		if (rm.cancel(dp1) == -1)
-			System.out.println("error ");
-		
-		//test-cases
-		//invalid DatePair construction
-		
-		try {
-			DatePair dp3 = new DatePair(LocalDate.of(2015, Month.JULY, 16), LocalDate.of(2013, Month.JULY, 10));
-		} catch (UnsupportedOperationException e) {
-			System.out.println("exception: invalid DatePair construction");
-		}
-		
-		//insert before today
-		try {
-			DatePair dp3 = new DatePair(LocalDate.of(2013, Month.JUNE, 3), LocalDate.of(2013, Month.JULY, 10));
-			rm.insert(dp3);
-		} catch (UnsupportedOperationException e) {
-			System.out.println("exception: insert before today");
-		}
-		
-		//overlap case 1
-		try {
-			DatePair dp3 = new DatePair(LocalDate.of(2015, Month.MAY, 3), LocalDate.of(2015, Month.MAY, 7));
-			rm.insert(dp3);
-		} catch (UnsupportedOperationException e) {
-			System.out.println("exception: overlap case 1");
-		}
-		
-		//overlap case 2
-		try {
-			DatePair dp3 = new DatePair(LocalDate.of(2015, Month.MAY, 20), LocalDate.of(2015, Month.MAY, 27));
-			rm.insert(dp3);
-		} catch (UnsupportedOperationException e) {
-			System.out.println("exception: overlap case 2");
-		}
-				
-	}
-	*/
 }
